@@ -5,8 +5,6 @@
 \usepackage{caption}
 \begin{comment}
 
-Include PFA model with single skill?
-Include PFA model with difficulty per item? -> prob not
 \end{comment}
 \usepackage{xcolor}
 \newcommand\todo[1]{\textcolor{red}{#1}}
@@ -19,7 +17,7 @@ Include PFA model with difficulty per item? -> prob not
 
 \begin{document}
 \title{Master Thesis Research Proposal}
-\subtitle{Inspecting IRT based learner models}
+\subtitle{What can the parameters of IRT based learner models tell us?}
 \author{Lieuwe Rekker}
 \maketitle
 \nocite{labelcombi}
@@ -69,19 +67,30 @@ In \cite{eirt} Roijers et al. extend the 2PL IRT function to include a learning 
 
 \section{Research Question}
 \label{sec:RQ}
-The question at the basis of the proposed research is "When are parameter values found in fitting IRT based models to data meaningful?". Two terms in this question need some clarification: meaningful here will only be looked at from the perspective of being consistent and accurately measurable. \commd{why not just use ``consistently and accurately measurable'' in the research question?} It will only be checked to see if parameter values remain consistent independent of what part of the data is looked at.\commd{Uhm, never? In maximum likelihood estimation the data is the determining factor, the parameters of any model learned by ML are thus never independent of the data.} This means that checking whether these values correspond to reality \commd{This is not out of scope, you will provide the ground truth, how much more real can you get?} and examining or defining the exact nature of these parameters\commd{Wouldn't even mention this other thing, it sounds way too philosophical. Maybe you mean whether the parameters of the model are a correct operationalisation of the concepts usually associated with student learning?} is out of scope. The other word that requires some clarification is 'when'. On the one hand it refers to looking at metrics of data fit, to see if a relation can be found between these metrics and meaningfulness of the parameters. On the other hand it refers to varying some of the different factors that (might) have an influence on the accuracy of fitted parameters. For the when part the research question is further split to look at the influence of particular factors. \commd{Explicitly mention your focus: data size - and if you're going to do it, different generating probability distributions for the parameters. Otherwise these sentences are still a bit vague.} Additionally two different perspectives are taken: looking at generated data to methodically examine the effect of the factors researched on parameter values and looking at data obtained from real students to try and apply the findings from the first part to practical cases.
+The question at the basis of the proposed research is "When are parameter values found in fitting IRT based models consistent and accurate". Three terms in this question need clarification: accurate, consistent and when.
 
-The first factor under consideration will be the amount of data. Preferably data is increased up to the point where the parameter estimates and their variances stabilize, so that a theoretical best achievable result can be established. The second factor that will be looked at is the usage of different models representing different assumptions on the domain. The models looked at are Learning Factor Analysis (LFA), Performance Factor Analysis (PFA) and an adapted version of extended Item Response Theory (eIRT). A fourth model, called the complex model will be used. This complex model is a generalization of the three models mentioned above. The third factor examined will be the way in which knowledge components for multi-skill items are combined (see section \ref{sec:comb}) to form a single prediction for that item. The final factor researched will be 'domain': learning may work differently for different subjects, the way a particular ITS structures its items and the context in which an ITS is used. For this factor a few different real life data-sets will be used.
+Accurate and consistent are linked to the two different perspectives that will be taken in this research: looking at data generated from the used models and looking at data from ITSs. In the case of generated data it can be established if the found parameter values are accurate by comparing them to the values used to generate the data. In the case of data from ITSs no such ground truth will be used (except where this data might be at hand). Instead for these parameters consistency of the parameter values is examined. To examine this the data will be split in parts and standard deviation of the parameter values over the multiple runs will be examined. Observations on consistency using the ITS data will be compared to consistency using the generated data to examine possible causes of inconsistency. Note that this research setup means that examining whether the parameters of the model correctly operationalize the mentioned constructs is out of scope. I.e. whether for example student learning really occurs at some specific rate will not be looked at, but rather only if the model's learning rate remains consistent will be looked at.
 
-The first angle\commd{The first factor, and then the first angle?} taken in this research is to train models based on generated data. This way the true parameter values are known and an upper bound can be established for how well this particular model can retrieve its parameters. Additionally comparing how models do on data generated by other models might provide some insights into what happens to parameter estimates when the 'true' model\commd{this is called ground truth} and the trained model differ in a known manner. The second angle is training the models on real data. In this case there won't be a ground truth for the parameters, but rather the variance of parameter estimates on different sub-sets of the data can be compared with each other and the results from the first angle's experiments.
+The term 'when' in the research question has two different interpretations. The first interpretation is the different factors of which the influence will be examined. The first factor under consideration will be the amount of data. Preferably data is increased up to the point where the parameter estimates and their variances stabilize, so that a theoretical best achievable result can be established. The second factor that will be looked at is the usage of different models representing different assumptions on the domain. The models looked at are Learning Factor Analysis (LFA), Performance Factor Analysis (PFA), an adapted version of extended Item Response Theory (seIRT) and a complex model. This complex model is a generalization of the three models mentioned above. The third factor is discrepancy between the trained model and the ground truth. In the case of generated data, a model can be trained on data generated by a different model, to examine the effects. Additionally in generating data the way in which knowledge components for multi-skill items are combined (see section \ref{sec:comb}) to predict performance is varied. Since the ground truth is not known in the ITS data, the discrepancy is not known and thus cannot be examined. However it might be possible to indicate what assumptions of the models do not hold in the ITS data by looking at the experiments on generated data. Finally there are many other factors that have an influence on performance (such as parameter values and how items and KCs are linked), that will not be examined individually. For these factors domains will be used. Each ITS dataset represents a domain. In generating data, parameter values and item to KC structure and number of students, questions etc. will be taken or estimated from the dataset to represent that domain.
+The second interpretation of 'when' doesn't refer to under what conditions the fit parameters are consistent and accurate, but rather if the accuracy and log likelihood of the model give an indication to the consistency and accuracy of the fitted parameters. If such a relation can be found, it can be more easily established if parameter values should be discarded as useless or might be of value.
 
+From the research question above and the interpretation the following research sub-questions are formulated.
+\begin{enumerate}
+\item What is the influence of amount of data used for fitting?
+\item What is the influence of using different models for fitting?
+\item What is the influence of using data from different domains?
+\item* What is the influence of generating data with different models?
+\item* What is the relationship between the accuracy and the consistency of the fitted parameters?
+\item what is the relationship between the accuracy of predictions made with the model, the likelihood of the data given the model and the accuracy/consistency of the fitted parameters?
+\end{enumerate} 
+Sub-questions indicated with an * only apply to the generated data case. In every sub-question influence means influence on the accuracy and/or consistency of parameter values over multiple runs.
 
 \section{Research Priorities}
 Below are my priorities for the research.
 
 {\bf Must} Use the different IRT models on two domains. Study their performance both on artificial and real data. Examine amount of data and method in which skills are combined.
 
-{\bf Should} Add another domain
+{\bf Should} Add another domain. Adapt and use methods from IRT to check if model assumptions hold.
 
 {\bf Could} Put a normal distribution assumption on the initial knowledge component as done in \cite{blackart} and as is often done in IRT \cite{irtest}. Incorporate a difficulty per item to the model.
 
