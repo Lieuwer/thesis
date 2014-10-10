@@ -3,6 +3,8 @@
 \usepackage{comment}
 \usepackage{amsmath}
 \usepackage{caption}
+\usepackage{graphicx}
+\usepackage{subfig}
 \begin{comment}
 
 \end{comment}
@@ -268,11 +270,19 @@ The variances discussed in the previous sections are not easily interpretable as
 R(\beta_{n}) = 1-\frac{\sigma^{2}(\beta_n)}{\sigma^{2}(\beta_{n})+\sigma^{2}(\beta)}
 \end{equation}
 
-Where $\beta_{n}$ is the $\beta$ parameter of the n-th KC, $\sigma^{2}(\beta_{n})$ is its variance and $\sigma^{2}(\beta)$ is the variance over the $\beta$ parameter of all KCs in the model. The reliability can be calculated for both the inherent and observed variance and can be calculated for any parameter, although $\beta$ was taken as an example here.
+Where $\beta_{n}$ is the $\beta$ parameter of the n-th KC, $\sigma^{2}(\beta_{n})$ is its variance and $\sigma^{2}(\beta)$ is the variance over the $\beta$ parameter of all KCs in the model. The reliability can be calculated for both the inherent and observed variance and can be calculated for any parameter, although $\beta$ was taken as an example here. Two issues should be noted here. First a normal distribution of the parameters is assumed here and when calculating from different reliabilities of different parameters the harmonic mean should be used.
+
+\begin{figure}
+\includegraphics[width=\textwidth]{reliVSprob2.png}
+\caption{Relation between reliability and percentage of correctly distinguished parameters}
+\label{fig:reli}
+\end{figure}
+
+When considering the consistency of parameters, a good way to look at them is distinguishability. For example, if we were to look at every possible pair of parameters, in how many cases would the one that is seemingly largest, actually be the largest? The reliability over the average variance of a parameter type is directly related to this measure (see figure \ref{fig:reli})
 
 \subsection{Domains}
 \label{sec:domain}
-In generating the data there are many other factors that might play a role in the performance of the models. Among those factors are the values that the parameters will be given, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in \ref{sec:RQ} these factors are not be explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data.
+In generating the data there are many other factors that might play a role in the performance of the models. Among those factors are the values that the parameters will be given, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in section \ref{sec:RQ} these factors are not be explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data.
 
 \subsection{Data cleaning}
 \label{sec:cleaning}
@@ -307,15 +317,68 @@ For every split into a number of parts and every model the following will be rep
 \end{enumerate}
 \todo{I'd also like to see to what extent inherent and total variance are related over the different splittings and models, as well as relations with accuracy and normalized log likelihood. correlation or spearmans R are two options I'm considering}
 
+\section{results}
+A few observations on the basis of the figures below. Foremost is the observation that the inherent variance is sometimes higher than the actual observed variance. A possible conclusion might be that reality is not quite as stochastic as the model: you either know a knowledge component or you don't and there is far less of a chance of answering correctly when you don't know an answer or vice versa. The question what part of the variance is due to internal variance is not useful as sometimes the variance is above and sometimes below the variance that is observed. This internal variance might still be useful though as it is rather correlated to the total variance, especially at lower values. (see the figure below)
+
+As expected the variance is less as more data is available although the variance seems to decrease less as data is increased. Also quite obvious is that the learning parameters have far higher variances than the beta parameter. Interestingly adding an additional parameter does not substantially change the variance of the beta parameter.
+
+
+
+\begin{figure}
+\centering
+\subfloat[AFM model on algebra05\_06 dataset]{
+  \includegraphics[width=65mm]{images/basicafm.png}
+}
+\subfloat[PFA model on algebra05\_06 dataset ]{
+  \includegraphics[width=65mm]{images/basicpfa.png}
+}
+\hspace{0mm}
+\subfloat[AFM model on bridgetoAlgebra06\_07 dataset]{
+  \includegraphics[width=65mm]{images/bridgeafm.png}
+}
+\subfloat[PFA model on bridgetoAlgebra06\_07 dataset]{
+  \includegraphics[width=65mm]{images/bridgepfa.png}
+}
+\hspace{0mm}
+\subfloat[AFM model on assistmentGong dataset]{   % ???
+  \includegraphics[width=65mm]{images/gongafm.png}
+}
+\subfloat[PFA model on assistmentGong dataset]{
+  \includegraphics[width=65mm]{images/gongpfa.png}
+}
+\caption{}
+\end{figure}
+\begin{figure}
+\centering
+\subfloat[AFM model, beta parameter]{
+  \includegraphics[width=65mm]{images/afm6in_tot_varbeta.png}
+}
+\subfloat[PFA model, gamma parameter ]{
+  \includegraphics[width=65mm]{images/afm6in_tot_vargamma.png}
+}
+\hspace{0mm}
+\subfloat[PFA model, beta parameter]{
+  \includegraphics[width=65mm]{images/pfa6in_tot_varbeta.png}
+}
+\subfloat[PFA model, gamma parameter]{
+  \includegraphics[width=65mm]{images/pfa6in_tot_vargamma.png}
+}
+\hspace{0mm}
+\subfloat[PFA model, ro parameter]{   % ???
+  \includegraphics[width=65mm]{images/pfa6in_tot_varro.png}
+}
+
+\caption{Standard deviations on the values of individual parameters on the bridgetoAlgebra06\_07 dataset}
+\end{figure}
+\newpage
 \todo{
-\section{Outstanding issues}
+\section{Things to add and change}
 \begin{itemize}
-\item In evaluating will accuracy in general be looked at, or rather will a more ordinal scale approach be taken
 \item Describe terms and use those consistently!
-\item get a better idea how A' should be applied in this context
+\item implement and describe the adapted A' approach
 \item related work is a bit out of place as it is not very intelligible without information given later. Maybe move it to the end, or rather integrate it with other stuff?
-\item 1-skill per item setting or multiple skill per item setting? -> depends on the next point, but it seems many are multi-dimensional
-\item find good data-set(s)...
+\item Describe the datasets and add some extra info on what the datasets look like?
+\item Investigate some of the outliers? 
 \end{itemize}
 }
 \bibliographystyle{alpha}   % this means that the order of references
