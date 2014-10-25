@@ -18,7 +18,7 @@
 \providecommand{\commd}[1]{\comm{D: {#1}}}
 
 \begin{document} 
-\title{Master Thesis Research Proposal}
+\title{Master Thesis Working Document}
 \subtitle{What can the parameters of IRT based learner models tell us?}
 \author{Lieuwe Rekker}
 \maketitle
@@ -34,6 +34,9 @@
 \nocite{lfa}
 \nocite{blackart}
 \nocite{hambleton}
+\nocite{bridge}
+\nocite{ct}
+\nocite{algebra}
 
 %\listofmycapequs
 
@@ -51,54 +54,24 @@ In IRT there are established methods to see if obtained parameters are significa
 
 This research will look at the influence of how certain factors influence the accuracy of parameters estimation. When applying IRT to test results, generally no external measure is used to check the found difficulty and skill parameters against, rather internal validity is used to see if the assumptions of IRT hold \cite{hambleton}. For example, when estimating the difficulty of an item, it should not matter whether the results of low or high ability students are used to estimate the difficulty. If this is not the case, this indicates that some assumptions are not met and makes the parameter values found of questionable value. This research will take a similar approach in looking at the found parameters. The research will be split into two parts. In the first part generated data is used, so that the real parameter values are known and effects of different factors can be estimated. In the second part real data will be cut into pieces so that variance of parameters can be determined. In combination with the first part of the research it is hoped that conclusions can be drawn as to whether the parameter values found are useful and whether the data-fit measures normally looked at provide some clue to this usefulness.
 
-\section{Related work}
-\commd{Right now, this section is a laundry list: it could be improved by adding some more structure.}
-
-In \cite{knowledgeproblem} Beck goes beyond investigating the accuracy of a model (knowledge tracing in this case) and also looks at the parameter values. The authors prime reason for concern lies in identifiability: the fact that widely differing parameter settings can lead to almost identical model outcomes. Although this paper does concern itself with the 'plausability' of parameter values it only goes so far as to nudge the parameter to values deemed plausible rather than asking the more fundamental question of whether the parameter values are useful at all.
-
-Learning factor analysis (LFA) \cite{lfa} is a cognitive model of how students learn. It is a Rasch model\commd{is one of the IRT variants... (you have not mentioned that yet)} extended with a learning rate to model learning over time. In \cite{lfa} LFA is used in the context of a greater cognitive model of learning and skill that includes what knowledge components are linked to what items. The quality of fit (measured as the log likelihood of the entire data set given the model plus some penalty for the number of parameters) is used as a measure of quality of a specific linkage of knowledge components to items.
-
-Performance factor analysis (PFA) is a further extension to LFA. It is introduced in \cite{pfa} as an alternative to knowledge tracing and focuses more on correctly estimating whether a student has mastered a particular knowledge component. The difference with LFA is that learning rate is dependant on whether a question is answered correctly or not. Furthermore initial student knowledge is dropped. The foremost reason for doing so is to make this model work for students of whom no data had been taken into account when fitting the model.
-
-In \cite{ktpfa} Gong et al. also made a comparison between various knowledge tracing approaches and PFA. Whether PFA or KT performs better remains inconclusive. Upon inspecting parameter values they found that many learning rates were negative, which seemed implausible in real life. They noted that upon placing a lower bound of 0 on the learning rate, performance improved.  Additionally the authors used a pretest and correlated the performance on this test to the initial knowledge parameter from the model. In this set-up an adapted version of PFA (the same version that will be used in this research: the original doesn't use initial student knowledge) showed the highest correlation).
-
-In \cite{blackart} Yudelson et al. show some particular factors that can negatively influence the quality of PFA models. One of the factors looked at here is model complexity: on the one hand this is done by using a more finegrained set of KCs and on the other hand by adding another parameter to the PFA model. In evaluating their results the authors did not only look at accuracy measures, but also inspected values for specific parameters. \todo{how did they get their standard deviations for the parameters? They don't seem to have split their data?} In inspecting learning parameters they also noted how the learning parameter for wrongly answered questions are often negative when initial knowledge is not included in the model. They concluded that PFA not so much models student learning in this case, but rather performs some kind of 'error tracking' in order to produce good estimates of skill despite not having any additional information on the student. They therefore prefer an adaptation of PFA that includes initial student knowledge.
-
-In \cite{eirt} Roijers et al. extend the 2PL IRT function to include a learning rate. This new version is called extended IRT (eIRT). There are two important differences in how this model has been extended and how LFA and PFA came to be. First LFA and PFA use a multidimensional model, which means that multiple skills can be associated with a single problem. Moreover in eIRT the learning rate depends on students, while in LFA and PFA the learning rates depend on the skills. Roijers et al. perform experiments using generated data, that shows that parameters can often be retrieved from the data. Additionally they have a real life data-set based on 14 students from three different groups. With the small amount of data in their real life set, they conclude based on their previous experiment that only rule difficulty and student initial knowledge can be determined with enough accuracy. After training the model on the data the fitted initial knowledge of the three different groups confirmed their hypothesis of the ordering of average initial knowledge per group. Also the ordering of difficulty of the rules involved is indistinguishable to rankings made by experts. The authors thus showed that the difficulty and initial knowledge parameters obtained reflect the ordering of these in real life.
-
-
-\section{Research Question}
-\label{sec:RQ}
-The main question looked into in this thesis is "When are parameter values found in fitting IRT based models consistent". The terms when and consistent require some elaboration and explanation. This is given in the following sub-sections, along with the formulation of related sub-questions.
-
-\subsection{What does 'consistent' mean}
-In this context consistent means that parameter values obtained through fitting the model on different data from the same domain leads to finding the same values. In other words the values obtained for a parameter show low variance. Since the data is binary, whereas the model works with probabilities, part of this variance stems from the workings of the model. To recognize how great of an influence this has on the variance the first subquestion is: "What part of inconsistencies in the parameter values can be attributed to the stochasticity of the model?"
-
-Beyond variance caused by the stochasticity of the model, no other specific sources of variance is looked into. Only the total variance is inspected and evaluated to see if it diminishes the value of the measurements.
-
-\subsection{When: what situations are investigated}
-The 'when' part refers to the conditions under which the parameter values are consistent. Three factors are investigated here to see the impact on variance of the parameters. First the amount of data used in training is generally a factor that can cause a significant amount of noise. The subquestion that arises is thus "What is the influence of the mount of data on the consistency of the parameters?" 
-
-There are some quite different ITSs that provide data in a form that is suitable for the IRT based models under investigation. The structure of the data between these ITSs and even between different subjects within the same ITS can be quite different. Additionally, learning is a complex matter for which many differences between classes using the same ITS can already impact how well the model works. Therefor different datasets is looked at to represent different domains. This enables looking into the subquestion: "What is the influence of the domain on the consistency of the parameters?".
-
-The idea behind this research is to create a framework from which to look into the obtained parameter values. This analysis would generally not be practical to repeat on every new dataset and thus another subquestion arises: "How can we easily know that the parameter values are consistent?" For example it might be that the performance of the model on a test set is a good indication for the consistency of the parameters.
-
-\begin{enumerate}
-\item What part of inconsistencies in the parameter values can be attributed to the stochasticity of the model?
-\item What is the influence of the amount of data?
-\item What is the influence of the domain?
-\item How can we easily know that the parameter values are consistent?
-\item (Does removing inaccurate parameters from the data improve the accuracy of other items?)
-\end{enumerate}
-
-
 \section{Models}
-All models used in this research are based on item response theory and use a version the 2 parameter item response function (IRF) \commd{No they don't, the first couple you mention use the 1 parameter IRT, also called Rasch, model}. The basis of this function is the logistic ogive function \ref{eq:logistic}. The most basic 2 parameter IRF is shown in \ref{eq:irt}. Here i stands for item and s stands for student. $\alpha$ is the discriminatory power of the item i.e. how much knowledge matters in how well a student does on that item. $\beta$ is the difficulty of the item i.e. how high a students skill should be to achieve a P of .5. $\theta$ is the skill of a student, indicating how well the student has mastered a knowledge component. The value of the function is interpreted as the probability that the student answers a question correctly. This is the same interpretation that is used throughout all models in this research.
 
+\subsection{IRT Models}
+For every question asked an IRT model uses the student $s$ and the item $i$ as input and return a probability $P$ that the question is answered correctly. The function at the basis of providing this probability is the logistic ogive function (\ref{eq:logistic}). Each student has exactly one parameter associated with them which represents the ability of the student and is here named skill and indicated by $\theta$. This parameter is generally the parameter of highest interest in tests as it can be used to order the level of skill of the different students. The number of parameters associated with items and how all these are combined into $x$ differs per particular model and is discussed in the following paragraphs.
 \begin{equation}
 \label{eq:logistic}
 \sigma(x) = \frac{1}{1+e^{-x}}
 \end{equation}
+
+The 1PL model, also known as the Rasch model has one parameter ($b$) per item (hence the name), which stands for the difficulty of the item. The entire formula for a questions probability of a correct answer is then: $P = \sigma(\theta_{s} - b_{i})$. This means that when the skill of the student and the difficulty of the item are on a par, the student has a probability of .5 to answer the question correctly. Note that one can keep the same model while changing the parameter values by increasing or decreasing all $\theta$ and $b$ by the same amount.
+
+The 2PL model expands the 1PL model with the parameter $a$ which is called the discrimation of the item. The 2PL then looks like this: $P = \sigma(a_{i} (\theta_{s} - b_{i}))$ The term discrimination comes from the fact that a high discrimination causes $P$ to change quickly when $(\theta_{s} - b_{i}))$ is small and thus the performance of students who are close in skill can be more easily distinguished. The flip-side here is that when $(\theta_{s} - b_{i}))$ isn\'t small, $P$ will more quickly drop to 0 or rise to 1, concealing any difference between student skill at those levels. 
+
+The final IRT model discussed here is the 3PL model which adds a chance parameter $c$. This model takes into account that on occasion the student could answer a question correctly by taking a (educated) guess. This phenomenon is of course most prevalent in multiple choice tests where the chances of correctly guessing the answer are relatively high. The model effectively changes the lowest probability to the level of $c$. In this thesis this model is left out of consideration as none of the learning models are based on it and none of the data is multiple choice.
+
+All models used in this research are based on item response theory and use a version the 2 parameter item response function (IRF) \commd{No they don't, the first couple you mention use the 1 parameter IRT, also called Rasch, model}. The basis of this function is the logistic ogive function \ref{eq:logistic}. The most basic 2 parameter IRF is shown in \ref{eq:irt}. Here i stands for item and s stands for student. $\alpha$ is the discriminatory power of the item i.e. how much knowledge matters in how well a student does on that item. $\beta$ is the difficulty of the item i.e. how high a students skill should be to achieve a P of .5. $\theta$ is the skill of a student, indicating how well the student has mastered a knowledge component. The value of the function is interpreted as the probability that the student answers a question correctly. This is the same interpretation that is used throughout all models in this research.
+
+
 
 \begin{equation}
 \label{eq:irt}
@@ -118,6 +91,7 @@ All models used in this research employ an important extension: it incorporates 
 LFA uses a simplified version of the IRF, but extents it by introducing a learning rate as discussed in the introduction and by allowing multiple knowledge components to be associated with a single item. The combination of KCs is made by summing the learned part of knowledge and the difficulty of the KC for every KC that is linked to the item.
 
 \begin{equation}
+\label{eq:afm}
 P = \sigma(\theta_{s,0} + \sum_{c \in KC}  \eta_{c} t_{s,c} - \beta_{c})
 \end{equation}
 \commd{So the start competence is the same for every knowledge component/skill, but the learning speed can vary per KC/skill... that is an assumption that is explicitly rejected in the eIRT paper.}
@@ -135,6 +109,7 @@ The experiment proposed above is put to the test here. Fitting a conjunctive mod
 PFA is a direct extension of LFA. In PFA separate learning rates are used for questions answered correctly and questions answered incorrectly. Additionally $\theta_{0}$ is dropped. As put forward in \cite{pfa} $\theta_{0}$ is dropped because this extension is made mostly to make this model more useful in ITSs. Leaving out any student specific parameter makes the model more easily applicable to students not used in the fitting procedure. As noted in both \cite{ktpfa} and \cite{blackart}, leaving out $\theta_{s,0}$ makes parameter estimates worse. Since prediction for students who were not part of the fitting procedure is not a primary concern here, a model that does include $\theta_{s,0}$ (as done in \cite{ktpfa} and \cite{blackart}) is used instead of PFA and will be referred to as PFA+.
 
 \begin{equation}
+\label{eq:pfa}
 P = \sigma(\theta_{s,0} \sum_{c \in KC}  \gamma_{c} g_{s,c} + \rho_{c} f_{s,c} - \beta_{c})
 \end{equation}
 \commd{Is there a minus sign missing here? same assumption as the last, but two different learning rates. }
@@ -228,6 +203,48 @@ LFA can be obtained from this model by taking $\alpha=1$, $\eta=1$ and $\gamma=\
 \end{comment}
 
 
+\section{Related work}
+\label{sec:RW}
+\commd{Right now, this section is a laundry list: it could be improved by adding some more structure.}
+
+In \cite{knowledgeproblem} Beck goes beyond investigating the accuracy of a model (knowledge tracing in this case) and also looks at the parameter values. The authors prime reason for concern lies in identifiability: the fact that widely differing parameter settings can lead to almost identical model outcomes. Although this paper does concern itself with the 'plausability' of parameter values it only goes so far as to nudge the parameter to values deemed plausible rather than asking the more fundamental question of whether the parameter values are useful at all.
+
+Learning factor analysis (LFA) \cite{lfa} is a cognitive model of how students learn. It is a Rasch model\commd{is one of the IRT variants... (you have not mentioned that yet)} extended with a learning rate to model learning over time. In \cite{lfa} LFA is used in the context of a greater cognitive model of learning and skill that includes what knowledge components are linked to what items. The quality of fit (measured as the log likelihood of the entire data set given the model plus some penalty for the number of parameters) is used as a measure of quality of a specific linkage of knowledge components to items.
+
+Performance factor analysis (PFA) is a further extension to LFA. It is introduced in \cite{pfa} as an alternative to knowledge tracing and focuses more on correctly estimating whether a student has mastered a particular knowledge component. The difference with LFA is that learning rate is dependant on whether a question is answered correctly or not. Furthermore initial student knowledge is dropped. The foremost reason for doing so is to make this model work for students of whom no data had been taken into account when fitting the model.
+
+In \cite{ktpfa} Gong et al. also made a comparison between various knowledge tracing approaches and PFA. Whether PFA or KT performs better remains inconclusive. Upon inspecting parameter values they found that many learning rates were negative, which seemed implausible in real life. They noted that upon placing a lower bound of 0 on the learning rate, performance improved.  Additionally the authors used a pretest and correlated the performance on this test to the initial knowledge parameter from the model. In this set-up an adapted version of PFA (the same version that will be used in this research: the original doesn't use initial student knowledge) showed the highest correlation).
+
+In \cite{blackart} Yudelson et al. show some particular factors that can negatively influence the quality of PFA models. One of the factors looked at here is model complexity: on the one hand this is done by using a more finegrained set of KCs and on the other hand by adding another parameter to the PFA model. In evaluating their results the authors did not only look at accuracy measures, but also inspected values for specific parameters. \todo{how did they get their standard deviations for the parameters? They don't seem to have split their data?} In inspecting learning parameters they also noted how the learning parameter for wrongly answered questions are often negative when initial knowledge is not included in the model. They concluded that PFA not so much models student learning in this case, but rather performs some kind of 'error tracking' in order to produce good estimates of skill despite not having any additional information on the student. They therefore prefer an adaptation of PFA that includes initial student knowledge.
+
+In \cite{eirt} Roijers et al. extend the 2PL IRT function to include a learning rate. This new version is called extended IRT (eIRT). There are two important differences in how this model has been extended and how LFA and PFA came to be. First LFA and PFA use a multidimensional model, which means that multiple skills can be associated with a single problem. Moreover in eIRT the learning rate depends on students, while in LFA and PFA the learning rates depend on the skills. Roijers et al. perform experiments using generated data, that shows that parameters can often be retrieved from the data. Additionally they have a real life data-set based on 14 students from three different groups. With the small amount of data in their real life set, they conclude based on their previous experiment that only rule difficulty and student initial knowledge can be determined with enough accuracy. After training the model on the data the fitted initial knowledge of the three different groups confirmed their hypothesis of the ordering of average initial knowledge per group. Also the ordering of difficulty of the rules involved is indistinguishable to rankings made by experts. The authors thus showed that the difficulty and initial knowledge parameters obtained reflect the ordering of these in real life.
+
+
+\section{Research Question}
+\label{sec:RQ}
+The main question looked into in this thesis is "When are parameter values found in fitting IRT based models distinguishable?". The interpretation of this question is specified in this section and some subquestions are defined which provide structure for the conducted experiments and the discussion of the results. The questions are each formulated in a subsection and referred to throughout the rest of this thesis.
+
+Distinguishable here refers to the need of knowing if the values of parameters are distinct rather than knowing how reliable any particular value is. I.e. the important question would be 'If the value for Tim's initial knowledge is higher than John's is this actually correct?' Thus instead of looking at how reliable particular values obtained in fitting the model are, it is looked at how reliable the ordering of the different values are.
+
+%Distinguishable will not have a clear distinguishable or not answer, but will rather have
+There are different levels on which distinguishable can be looked at. In the question above it is on the level of two specific parameters. The default level on which this question will be answered is on the level of parameter type: how well are all the parameters of a particular type distinguishable from each other (macro level). Nevertheless some energy is put into exploring this question on the micro level: i.e. can we say something about how distinguishable a specific parameter is from other parameters?
+
+When on the one hand refers to the fact that distinguishable will depend on some factors, such as how much and what data is used in fitting the model. When also refers to finding conditions that indicate how distinguishable the parameters are. In later sections it is seen that finding the distinguishability of parameters is complex, time consuming and restricted to subsets of the data. Thus finding other, more easily obtained measures that indicate distinguishability would be favorable.
+
+\subsection{What is the influence of the amount of data on distinguishability}
+It is expected that simply increasing the amount of data while holding the number of parameters constant will improve the estimation of those parameters and thus increase distinguishability. 
+
+\subsection{How does distinguishability differ between domains?}
+There are some quite different ITSs that provide data in a form that is suitable for the IRT based models under investigation. The structure of the data between these ITSs and even between different subjects within the same ITS can be quite different. Additionally, learning is a complex matter for which many differences between classes using the same ITS can already impact how well the model works. Therefor different datasets are looked at to represent different domains.
+
+\subsection{How can we easily know that parameter values are distinguishable?}
+This subquestion refers to the second interpretation of 'when' in the main research question: for some measures that are more easily obtained than the distinguishability of parameters it will be checked how well they relate to the distinguishability of parameters, both on the macro level and the micro level.
+
+\subsection{To what extent is distinguishability attributable to stochasticity of the model?}
+The models used are stochastic in nature. Even when the probability of a correct answer is 90\%, an incorrect answer is still expected in 10\% of the cases. This means that even if data would be noiselessly generated by the model, some variation in data and thus some variation in found parameters will be observed. It is expected that noise in the domain and mismatch between model and reality will add additional variance to this. To separate the two and to see if maybe this variance (which is easier to obtain) correlates with the total variance, it is studied as well.
+
+
+
 
 \section{Method}
 
@@ -273,7 +290,7 @@ R(\beta_{n}) = 1-\frac{\sigma^{2}(\beta_n)}{\sigma^{2}(\beta_{n})+\sigma^{2}(\be
 Where $\beta_{n}$ is the $\beta$ parameter of the n-th KC, $\sigma^{2}(\beta_{n})$ is its variance and $\sigma^{2}(\beta)$ is the variance over the $\beta$ parameter of all KCs in the model. The reliability can be calculated for both the inherent and observed variance and can be calculated for any parameter, although $\beta$ was taken as an example here. Two issues should be noted here. First a normal distribution of the parameters is assumed here and when calculating from different reliabilities of different parameters the harmonic mean should be used.
 
 \begin{figure}
-\includegraphics[width=\textwidth]{reliVSprob2.png}
+\includegraphics[width=\textwidth]{images/reliVSprob2.png}
 \caption{Relation between reliability and percentage of correctly distinguished parameters}
 \label{fig:reli}
 \end{figure}
@@ -282,8 +299,16 @@ When considering the consistency of parameters, a good way to look at them is di
 
 \subsection{Domains}
 \label{sec:domain}
-In generating the data there are many other factors that might play a role in the performance of the models. Among those factors are the values that the parameters will be given, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in section \ref{sec:RQ} these factors are not be explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data.
+In generating the data there are many other factors that might play a role in the performance of the models. Among those factors are the values that the parameters will be given, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in section \ref{sec:RQ} these factors are not explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data. The different datasets and some of the characteristics are described in this section.
 
+\subsubsection{Bridge to Algebra}
+The first data-set is one of the datasets used in the 2010 KDD cup on education data mining. The data is from Carnegie Learnings' Cognitive Tutor Software meant for high school-students aged 15-18. \cite{ct} provides an overview of some of the features of this program. The data was obtained from the Bridge to Algebra course during the school year 2006-2007 \cite{bridge}. 
+
+\subsubsection{Algebra I}
+This dataset was also provided in the 2010 KDD cup. The data is also obtained from Carnegie Learnings' Cognitive Tutor Software, but from the Algebra I course during the school year 2005-2006 \cite{algebra}
+
+\subsection{Assistment}
+This dataset is quite different from the other two as it is taken from a web-based ITS named Assistment whose details and development story can be found in \cite{razzaq}. The data is from 12 to 14 year old students and was used in \cite{ktpfa} which was discussed in section \ref{sec:RW}. The data does not only contain data from usage of the ITS but also data from a pre-test.
 \subsection{Data cleaning}
 \label{sec:cleaning}
 Splitting the data may exacerbate some of the issues that can be encountered in fitting the model. One example is when all questions associated with a student or a KC are answered correctly or incorrectly. This makes the fitting algorithm want to assign infinite values to parameters. Another problem is when for a KC there is such a limited number of questions answered that learning rates cannot be estimated.
@@ -318,6 +343,7 @@ For every split into a number of parts and every model the following will be rep
 \todo{I'd also like to see to what extent inherent and total variance are related over the different splittings and models, as well as relations with accuracy and normalized log likelihood. correlation or spearmans R are two options I'm considering}
 
 \section{results}
+Kendall
 A few observations on the basis of the figures below. Foremost is the observation that the inherent variance is sometimes higher than the actual observed variance. A possible conclusion might be that reality is not quite as stochastic as the model: you either know a knowledge component or you don't and there is far less of a chance of answering correctly when you don't know an answer or vice versa. The question what part of the variance is due to internal variance is not useful as sometimes the variance is above and sometimes below the variance that is observed. This internal variance might still be useful though as it is rather correlated to the total variance, especially at lower values. (see the figure below)
 
 As expected the variance is less as more data is available although the variance seems to decrease less as data is increased. Also quite obvious is that the learning parameters have far higher variances than the beta parameter. Interestingly adding an additional parameter does not substantially change the variance of the beta parameter.
@@ -387,6 +413,17 @@ As expected the variance is less as more data is available although the variance
 \bibliography{litlist}
 \newpage
 \appendix
+\section{Implementation and Mathematical argumentation}
+The AFM and PFA model are relatively straightforward in their data representation and implementation. For these models $x$ in formula \ref{eq:logistic} is linear in the parameters, which means that standard logistic regression can be applied. In this appendix first the way the data is represented is described followed by a proof that logistic regression indeed finds the parameter values where the likelihood of the data is highest. 
+\subsection{Data Representation}
+For logistic regression the data is represented in a matrix $\Phi$ such that $\Phi w$ is equal to a vector of each value of $x$ in formula \ref{eq:logistic}, where $w$ is a column vector of the parameter values. 
+In this matrix the rows represent data points while the columns represent what the parameters should be multiplied with. The dimensions of the matrix are thus equal to the number of data points by the number of parameters.
+
+In the formulas for AFM (formula \ref{eq:afm}) and PFA (formula \ref{eq:pfa}) $x$ consists of a sum where every part contains exactly one parameter. This makes construction of $\Phi$ straightforward: in each row (thus for every data point) a 1 is placed for every present parameter that stands isolated (this goes for $\theta$ and $\beta$) and for the others ($\eta$,$\gamma$ and $\rho$) the right value for that data point is inserted (a non-negative integer). Any parameter not used for that specific datapoint will have a value of 0.
+
+\subsection{Workings of Logistic Regression}
+Logistic regression estimates the values of the parameters that maximize the likelihood of the data given the model. The likelihood of the data is equal to $\prod_{d \in D} P_{d}^{t_d}  (1- P_{d})^{1-t_d} $
+\pagebreak 
 \section{Glossary}
 \todo{
 Making a start with using terms consistently, plus I generally feel that a glossary would have helped me greatly in understanding papers etc.}
