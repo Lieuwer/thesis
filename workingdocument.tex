@@ -9,12 +9,12 @@
 
 \end{comment}
 \usepackage{xcolor}
-\newcommand\todo[1]{\textcolor{red}{#1}}
+\newcommand\todo[1]{\textit{\textcolor{red}{#1}}}
 
 \DeclareCaptionType{mycapequ}[][List of equations]
 \captionsetup[mycapequ]{labelformat=empty}
 
-\providecommand{\comm}[1]{{\bf[ #1 ]}}
+\providecommand{\comm}[1]{{\textbf[ #1 ]}}
 \providecommand{\commd}[1]{\comm{D: {#1}}}
 
 \begin{document} 
@@ -57,28 +57,50 @@ This research will look at the influence of how certain factors influence the ac
 \section{Models}
 
 \subsection{IRT Models}
-For every question asked an IRT model uses the student $s$ and the item $i$ as input and return a probability $P$ that the question is answered correctly. The function at the basis of providing this probability is the logistic ogive function (\ref{eq:logistic}). Each student has exactly one parameter associated with them which represents the ability of the student and is here named skill and indicated by $\theta$. This parameter is generally the parameter of highest interest in tests as it can be used to order the level of skill of the different students. The number of parameters associated with items and how all these are combined into $x$ differs per particular model and is discussed in the following paragraphs.
+For every question asked an IRT model uses the student $s$ and the item $i$ as input and return a probability $P$ that the question is answered correctly. The function at the basis of providing this probability is the logistic ogive function (see formula \ref{eq:logistic}). Each student has exactly one parameter associated with them which represents the ability of the student and is here named skill and indicated by $\theta$. This parameter is generally the parameter of highest interest in tests as it can be used to order the level of skill of the different students. The number of parameters associated with items and how all these are combined into $x$ differs per particular model and is discussed in the following paragraphs.
 \begin{equation}
 \label{eq:logistic}
 \sigma(x) = \frac{1}{1+e^{-x}}
 \end{equation}
 
-The 1PL model, also known as the Rasch model has one parameter ($b$) per item (hence the name), which stands for the difficulty of the item. The entire formula for a questions probability of a correct answer is then: $P = \sigma(\theta_{s} - b_{i})$. This means that when the skill of the student and the difficulty of the item are on a par, the student has a probability of .5 to answer the question correctly. Note that one can keep the same model while changing the parameter values by increasing or decreasing all $\theta$ and $b$ by the same amount.
+\subsubsection{1PL or Rasch Model}
+The 1PL model, also known as the Rasch model has one parameter ($b$) per item (hence the name), which stands for the difficulty of the item. The entire formula for a question's probability of a correct answer is then: $P(s,i) = \sigma(\theta_{s} - b_{i})$. This means that when the skill of the student and the difficulty of the item are on a par, the student has a probability of .5 to answer the question correctly. Note that there exists an indeterminacy issue with this model: one can keep the same model while changing the parameter values by increasing or decreasing all $\theta$ and $b$ by the same amount. This problem is generally solved by setting the average $\theta$ to 0.
 
-The 2PL model expands the 1PL model with the parameter $a$ which is called the discrimation of the item. The 2PL then looks like this: $P = \sigma(a_{i} (\theta_{s} - b_{i}))$ The term discrimination comes from the fact that a high discrimination causes $P$ to change quickly when $(\theta_{s} - b_{i}))$ is small and thus the performance of students who are close in skill can be more easily distinguished. The flip-side here is that when $(\theta_{s} - b_{i}))$ isn\'t small, $P$ will more quickly drop to 0 or rise to 1, concealing any difference between student skill at those levels. 
+\subsubsection{2PL Model}
+The 2PL model expands the 1PL model with the parameter $a$ which is called the discrimination of the item. The 2PL then looks like this: $P(s,i) = \sigma(a_{i} (\theta_{s} - b_{i}))$ The term discrimination comes from the fact that a high discrimination causes $P$ to change quickly when $(\theta_{s} - b_{i})$ is small and thus the performance of students who are close in skill can be more easily distinguished. The flip-side here is that when $(\theta_{s} - b_{i})$ isn't small, $P$ will more quickly drop to 0 or rise to 1, concealing any difference between the skill levels of those students. Note that for this model not only can $\theta$ and $b$ be increased or decreased by the same amount, but all $a$ can be scaled up or down to will as long as all $\theta$ and $b$ are scaled down or up respectively by the same factor. This problem is generally solved by setting the average $\theta$ to 0 and its variance to 1. 
 
-The final IRT model discussed here is the 3PL model which adds a chance parameter $c$. This model takes into account that on occasion the student could answer a question correctly by taking a (educated) guess. This phenomenon is of course most prevalent in multiple choice tests where the chances of correctly guessing the answer are relatively high. The model effectively changes the lowest probability to the level of $c$. In this thesis this model is left out of consideration as none of the learning models are based on it and none of the data is multiple choice.
-
-All models used in this research are based on item response theory and use a version the 2 parameter item response function (IRF) \commd{No they don't, the first couple you mention use the 1 parameter IRT, also called Rasch, model}. The basis of this function is the logistic ogive function \ref{eq:logistic}. The most basic 2 parameter IRF is shown in \ref{eq:irt}. Here i stands for item and s stands for student. $\alpha$ is the discriminatory power of the item i.e. how much knowledge matters in how well a student does on that item. $\beta$ is the difficulty of the item i.e. how high a students skill should be to achieve a P of .5. $\theta$ is the skill of a student, indicating how well the student has mastered a knowledge component. The value of the function is interpreted as the probability that the student answers a question correctly. This is the same interpretation that is used throughout all models in this research.
-
-
+\subsubsection{3PL Model}
+The final IRT model discussed here is the 3PL model which adds a chance parameter $c$. This model takes into account that on occasion the student could answer a question correctly by taking a (educated) guess. This phenomenon is of course most prevalent in multiple choice tests where the chances of correctly guessing the answer are relatively high. The model effectively changes the lowest probability to the level of $c$ and the space between $c$ and $1$ is rescaled accordingly leading to formula \ref{eq:3PL}. This model suffers from the same identifiability issues as the 2PL model. In this thesis this model is left out of consideration, as none of the learning models are based on it and none of the data is multiple choice and will thus not be mentioned again. 
 
 \begin{equation}
-\label{eq:irt}
-P = \sigma(\alpha_{i} (\theta_{s} - \beta_{i}))
+\label{eq:3PL}
+P(s,i)= c_{i} + \frac{1-c_{i}}{1+e^{-a_{i}(\theta_{s} - b_{i})}}
 \end{equation}
 
+\subsubsection{Fitting the Models}
+The above paragraphs have discussed what the parameters are taken to represent and how they are used in the model. None of these parameters are directly observable (i.e. they are latent) and thus are not directly obtained from observations. Instead the observed correctness of the answers to the questions asked and the model probabilities for the correctness of those answers are used. The parameters are given those values at which the likelihood that the observed answers arise from the model is maximized. The likelihood of a single question is the probability that the correctness of the answer is seen according to the model. Thus if the question is answered correctly, the likelihood for that answer is $P$, while if the question is answered incorrectly the likelihood is $1-P$. By multiplying the likelihood of every datapoint the likelihood of the entire dataset is determined and we end up with formula \ref{eq:likely}.
+
+\begin{equation}
+\label{eq:likely}
+L=\prod_{d \in D} P_{d}^{t_d}  (1- P_{d})^{1-t_d}
+\end{equation}
+
+In the 1PL model $x$ is linear in the parameters, which makes maximizing the likelihood quite straightforward: logistic regression can be directly applied to this problem. In the 2PL (and 3PL incidently, which will now really not be mentioned further) $x$ is bi-linear and thus logistic regression can not be applied directly. Instead values for student parameters are fixed (making $x$ linear again), logistic regression is applied, the found item parameter values are then kept fixed to find the values for the student parameters. This procedure is repeated until the likelihood of the data is (almost) the same in different runs of logistic regression. For more detailed information on logistic regression and how it is used here, please refer to appendix \ref{app:math}.
+
+\subsubsection{Assessment of fit}
+The issue with IRT is that the parameters which are of interest are not directly observable. It might be possible through the use of experts to get an indication of what values, but this would at least be costly and still difficult to do. In \cite{hambleton} puts forward three types of evidence to inspect model fit:
+
+\begin{quote}[J]udgements about the fit of the model to the test data be based on three types of evidence: 1. Validity of the assumptions of the model for the test data 2. Extend to which the expected properties of the model (e.g., invariance of item and ability parameters) are obtained 3. Accuracy of model predictions using real and, if appropriate, simulated test data.[p.55]
+\end{quote}
+
+The third point is most straightforward: if the predictions by the model for questions that were not used in fitting are inaccurate, the model is probably not a good fit for the data. The most important assumption the first point refers to is that of unidimensionality: the skill represented by $\theta$ should be the only skill of importance in answering the items. A good example is when some questions on a math question use difficult wording, making a high skill in math insufficient for correctly answering this item. The second point and especially the mentioned example of invariance is of major importance for IRT. In Hambleton's own words: "The property of invariance of item and ability parameters is the cornerstone of IRT". Invariance means that the values obtained for items are the same whether they are fitted on the data obtained from one group of students or another group of students and the same for the parameter values of students.
+
+
+------
+
 All models used in this research employ an important extension: it incorporates learning by students. Skill, $\theta$ is split up into an initial part and a learning rate, so that each time a question is answered the skill of the student increases. In the ITS there are many different knowledge components and thus the parameters are fit per knowledge component. Depending on the data-set used an item can have multiple components associated with them, creating the necessity to combine multiple item response functions.
+-----
+
 
 \todo{Say something about the fitting procedure for each seperate model.}\commd{what, here? or do you mean the alternate ML optimization of student and item parameters? }
 
@@ -414,6 +436,7 @@ As expected the variance is less as more data is available although the variance
 \newpage
 \appendix
 \section{Implementation and Mathematical argumentation}
+\label{app:math}
 The AFM and PFA model are relatively straightforward in their data representation and implementation. For these models $x$ in formula \ref{eq:logistic} is linear in the parameters, which means that standard logistic regression can be applied. In this appendix first the way the data is represented is described followed by a proof that logistic regression indeed finds the parameter values where the likelihood of the data is highest. 
 \subsection{Data Representation}
 For logistic regression the data is represented in a matrix $\Phi$ such that $\Phi w$ is equal to a vector of each value of $x$ in formula \ref{eq:logistic}, where $w$ is a column vector of the parameter values. 
@@ -423,6 +446,7 @@ In the formulas for AFM (formula \ref{eq:afm}) and PFA (formula \ref{eq:pfa}) $x
 
 \subsection{Workings of Logistic Regression}
 Logistic regression estimates the values of the parameters that maximize the likelihood of the data given the model. The likelihood of the data is equal to $\prod_{d \in D} P_{d}^{t_d}  (1- P_{d})^{1-t_d} $
+
 \pagebreak 
 \section{Glossary}
 \todo{
