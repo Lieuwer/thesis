@@ -258,8 +258,12 @@ Additionally a method that from IRT \cite{hambleton} will be used. After initial
 
 Although the primary way in which model parameters will be examined is described above, alternative methods will be used where applicable. Some data-sets contain additional information that can be used to more directly draw conclusions on whether found parameter values are meaningful. Two examples from the related research section are \cite{eirt} where expert opinions and an indication of what groups have higher initial knowledge were used and \cite{ktpfa} where a pre-test was used as an indicator of initial knowledge.
 
-\subsection{Rankorders}
-todo{Introduce the Kendall and Spearman rankorders and describe where and why they are used.}
+\subsection{Rank Order Correlation Measures}
+Rank order correlation measures are used when comparing sets of paired values. Rank orders are made for each set meaning that every value is replaced with its rank (i.e. 1 for the highest value, 2 for the second highest). A correlation is then made between the two rank orders, where a value of 1 means that if the one value is the x highest value, the paired value in the other set is also the x highest value. A rank order correlation of -1 means the opposite: if one value is the  highest, the paired value in the other set is the x lowest value. For example we could have weight and height of people as the pairs of values. We would expect a positive rank order correlation measure, since taller people are generally more heavy. Nevertheless we do not expect a value of 1 since a very tall person might be lighter than a slightly shorter person. The advantage of using a rank order correlation is that it indicates that a relation exists between the two values while not restricting this relation to a particular form (e.g. linear relation)
+
+The first rank order measure that will be used here is Kendall's Tau. Kendall's Tau looks at all the pairings of values in one set and looks whether or not the order of those values is the same as the ordering of the paired values. Kendall's Tau is then equal to $\tau=\frac{|same ordered pairs|-|different ordered pairs|}{.5 n (n-1)}$. $n$ is the number of paired values and the  denominator then boils down to the number of possible pairs within a set of values. Here $\tau$ will be used to compare pairs of estimates of parameters. In this case the interpretation is that if we take two random observations from one set and see that observation 1 is bigger than observation 2 in $frac{\tau+1}{2}$ of the cases observation 1 in the other set will also be bigger than observation 2 in that other set.
+
+The other rank order measure used is Spearman's rho. The formula for Spearman's rho is $1-\frac{6 \sum\limits_{i=1}^n d_{i}^{2}}{n(n^{2}-1)}$ Where $d_{i}$ is the difference in rank for the $i$th pair of values and n is the total number of pairs. The difference with Kendall's tau is that more emphasis is put on 'outliers' (large differences in ranks between pairs). Spearman's rho will be used to compare sets of different paired measurements to see if a relation could be found between them, which is more heavily impaired by outliers.
 
 \subsection{Inherent Variance}
 Inherent variance is used as the name for the variance caused by the stochasticity of the model. 
@@ -375,12 +379,6 @@ For every split into a number of parts and every model the following will be rep
 \end{comment}
 
 \section{results}
-\begin{comment}
-Kendall
-A few observations on the basis of the figures below. Foremost is the observation that the rank order on  is sometimes higher than the actual observed variance. A possible conclusion might be that reality is not quite as stochastic as the model: you either know a knowledge component or you don't and there is far less of a chance of answering correctly when you don't know an answer or vice versa. The question what part of the variance is due to internal variance is not useful as sometimes the variance is above and sometimes below the variance that is observed. This internal variance might still be useful though as it is rather correlated to the total variance, especially at lower values. (see the figure below)
-
-As expected the variance is less as more data is available although the variance seems to decrease less as data is increased. Also quite obvious is that the learning parameters have far higher variances than the beta parameter and that they are further. Interestingly adding an additional parameter does not substantially change the variance of the beta parameter.
-\end{comment}
 \subsection{Orderings within parameters}
 In figure \ref{fig:ranks} the results on first glance are generally as is expected: the tau of parameters improves as more data is used and the rank orders of simulated data are higher than those over splits of observed data. At a second look a few things stand out. Sometimes there seems to be some noise in the experiments (for example the $\eta$ parameter in the Algebra dataset). Furthermore the increase in tau for $\rho$ is small, if existent at all, for the tau over simulated data. Another interesting observation is that the rank orders on the observed data get closer to the rank orders of the simulated data as more data is used and that the gap between the two is smaller for $\beta$ than it is for the learning parameters. Finally it would seem that there is still room for improvement for Tau when adding more data.
 
@@ -408,20 +406,22 @@ In comparing the AFM and PFA model the rank orders of the $\beta$ parameters, an
  
 The Tau for the different domains look quite similar, which is surprising given the differences in the amount of data per KC for the different domains. The improvements in Tau for the Bridge data set seem to taper off towards the end and will probably benefit least from more data, while the other models still seem to have improving tau values. 
 \subsection{Overall variance of parameters}
-\begin{figure}
+\label{sec:varresults}
+\begin{figure}[!htbp]
 
 \centering
 \subfloat[Legend for the figures]{
   \includegraphics[width=30mm]{images/legend.png}
 }
-\subfloat[Rankorders for Bridge0506 parameters]{
+\subfloat[Standard deviations for Bridge0506 parameters]{
   \includegraphics[width=65mm]{images/bridgeallmodsdsKC.png}
 }
 \hspace{0mm}
-\subfloat[Rankorders for Algebra0607 parameters]{
+\subfloat[Standard deviations for Algebra0607 parameters]{
   \includegraphics[width=65mm]{images/algebraallmodsdsKC.png}
+  \label{fig:sdalg}
 }
-\subfloat[Rankorders for Assistment parameters]{
+\subfloat[Standard deviations for Assistment parameters]{
   \includegraphics[width=65mm]{images/gongallmodsdsKC.png}
 }
 \caption{(Average) standard deviations of the different parameters}
@@ -431,60 +431,64 @@ The Tau for the different domains look quite similar, which is surprising given 
 
 Figure \ref{fig:sds} is similar to figure \ref{fig:ranks} except with standard deviations over the different splits or generated data sets instead of Kendall's Tau. The diminishing standard deviations are as expected, but both the large values as well as the small difference between variance over splits and variance over generated data sets is surprising given the graphs in figure \ref{fig:ranks}. 
 
-The first might be explained if the different splits give very different parameter values while still largely remaining the same ordering. The second problem would still not be explained though. Upon inspection it turns out that somehow the variation within a parameter of a model fitted on a split is far larger than that of a model fitted on the whole dataset (which was used to normalize the standard deviation values). Additionally the variance within a parameter of a model fitted on generated data is again larger than that of a model fitted on a split. This makes that the same variance has less influence on the ordering since the nearest values of other parameters are further away.
+The first might be explained if the different splits give very different parameter values while still largely remaining the same ordering. The second problem would still not be explained though. Upon inspection it turns out that somehow the variation within a parameter of a model fitted on a split is far larger than that of a model fitted on the whole dataset (which was used to normalize the standard deviation values). Additionally the variance within a parameter of a model fitted on generated data is again larger than that of a model fitted on a split. This makes that the same variance has less influence on the ordering since the nearest values of other parameters are further away. Here also lies the explanation for the out-lier of $\rho$ in figure \ref{fig:sdalg}: upon inspection, a model fitted on one of the six splits and its simulated data showed an unusually high standard deviation for $\rho$, having a big impact on the final standard deviations.
+
 \todo{Ik heb deze data in een onhandig formaat en zou het kunnen agregeren en weergeven om een beter beeld te hebben van hoe dit er precies uitziet en varieert per dataset/parameter/aantal splits}
 
+\subsection{Measures of fit}
+In figure \ref{fig:likely} the points belonging to the different splits can easily be distinguished: there are three groups one for each data set (from left to right, Assistment, Algebra and Bridge) and within each group the point with the highest tau value is the one with the most data associated with it. That the PFA models have a higher likelihood is to be expected as it has more parameters than the AFMs. It is also sensible that with more data in a split the likelihood goes down, since there the same number of parameter values are used to explain more data. Although there is a nice relationship between tau and likelihood within each dataset, this relationship might mostly stem from the previous two relationships mentioned: as the amount of data goes up, so do the tau values and as the amount of data goes up, the likelihood goes down. When looking over all three datasets there actually seems to be a slightly positive relation between likelihood and tau values. The wide spread between splits of the same dataset (where the relation is quite negative) compared to the slight positive relation makes it unlikely that likelihood can be used to make inferences about the invariability of parameter values.   
 
-Aprime
-Good relation with rankorders, although for one dataset not necessarily good to use (show figure for one dataset)
+\begin{figure}[!htbp]
+\centering
+\subfloat[Average Log Likelihood vs Kendall Tau over splits]{
+  \includegraphics[width=65mm]{images/alllikely.png}
+  \label{fig:likely}
+}
+\subfloat[a' vs total Kendall Tau over splits]{
+  \includegraphics[width=65mm]{images/allaprimes.png}
+  \label{fig:ap}
+}
+\caption{Kendall Tau values vs goodness of fit measures}
+\end{figure}
 
-Likelihood
-In a single dataset yes, although not really useful (both across datasets and within as it is just an indication of amount of data)
+A' shows more promise to be a useful feature in establishing the invariability of parameter values. As seen in figure \ref{fig:ap} there is a positive relation between A' and the tau of all the different parameters in both models. Another interesting observation is that the PFA models generally performs better on A' than the AFMs do.
 
+\subsection{Micro level}
+So far the results have been looked at on a global level, now it is time to look at the data from the perspective of individual parameter values. In table \ref{tab:intorank} the Spearman's r values can be seen when comparing the inherent variances and the observed variances of all the different parameter values from all the different splits. The values found are quite high, indicating that inherent variance could well be used in predicting the variance of specific parameter values. 
 
-
+In section \ref{sec:varresults} it was discovered that over the different splits there can be a significant difference in the variance of a parameter. This has as an unintended consequence that the Spearman's r values are higher when the values of the different splits overlap less. Therefor the Spearman's R values were recalculated using the average of the values in each split rather than the value over all splits combined. The results were vary similar (mostly a difference of .01) and therefor left out. 
 \begin{center}
-\begin{table}
-
-
-\label{tab:intorank}
+\begin{table}[!htbp]
 \begin{tabular}{| l || l | l ||l|l |l|}
 
     \hline
      & AFM  & & PFA & &   \\ \hline
     Dataset & $\beta$ & $\eta$ & $\beta$ & $\gamma$ & $\rho$  \\ \hline
-    Bridge &.86 &.92 & .91& .95 &  .92 \\ \hline
-    Algebra & .91 & .97 & .94 &.98&  .96 \\ \hline
-    Assistment & .90 & .97 & .88& .97& .96 \\ \hline \hline
-    Overall & .87  & .94 & .91 & .96 & .94 \\
+    Bridge     & .86 & .92 & .91 & .95 & .92 \\ \hline
+    Algebra    & .91 & .97 & .94 & .98 & .96 \\ \hline
+    Assistment & .90 & .97 & .88 & .97 & .96 \\ \hline \hline
+    Overall    & .87 & .94 & .91 & .96 & .94 \\
     \hline
 \end{tabular}
+\label{tab:intorank}
 \caption{Spearman's R of inherent and total variance of various parameters and models over all splits}
 \end{table}
-
 \end{center}
 
+\todo{
+I have made graphs scatterplotting value in the mainmodel against both inherent variance found in the splits and the observed variance over the splits, but am not sure to include them as I'm not quite sure what I would have liked to learn from them. Interesting observation though is that variance doesn't appear to be higher on the edges.
+Interesting still might be to see how such a figure compares to seeing the inherent variance based on the model on whole the data instead of the splits.}
 
-\begin{figure}
-\centering
-\subfloat[a' vs total Kendall Tau over splits]{
-  \includegraphics[width=65mm]{images/allaprimes.png}
-}
-\subfloat[Average Log Likelihood vs Kendall Tau over splits]{
-  \includegraphics[width=65mm]{images/alllikely.png}
-}
+Prediction of knowledge level...
 
-\caption{}
-\end{figure}
+
 
 \newpage
 \todo{
 \section{Things to add and change}
 \begin{itemize}
 \item Describe terms and use those consistently!
-\item implement and describe the adapted A' approach
 \item related work is a bit out of place as it is not very intelligible without information given later. Maybe move it to the end, or rather integrate it with other stuff?
-\item Describe the datasets and add some extra info on what the datasets look like?
 \item Investigate some of the outliers? 
 \end{itemize}
 }
