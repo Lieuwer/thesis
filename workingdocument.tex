@@ -532,7 +532,28 @@ In this matrix the rows represent data points while the columns represent what t
 In the formulas for the LFA model (formula \ref{eq:afm}) and the PFA model (formula \ref{eq:pfa}) $x$ consists of a sum where every part contains exactly one parameter. This makes construction of $\Phi$ straightforward: in each row (thus for every data point) a 1 is placed for every present parameter that stands isolated (this goes for $\theta$ and $\beta$) and for the others ($\eta$,$\gamma$ and $\rho$) the right value for that data point is inserted (a non-negative integer). Any parameter not used for that specific datapoint will have a value of 0.
 
 \subsection{Workings of Logistic Regression}
-Logistic regression estimates the values of the parameters that maximize the likelihood of the data given the model. The likelihood of the data is equal to $\prod_{d \in D} P_{d}^{t_d}  (1- P_{d})^{1-t_d} $
+Logistic regression estimates the values of the parameters that maximize the likelihood of the data given the model. The likelihood of the data is equal to $\prod_{d \in D} P_{d}^{t_d}  (1- P_{d})^{1-t_d} $. Here $D$ is the set of all data points and $t_{d}$ is the label (0 for incorrect, 1 for correct) of data-point $d$. The logarithm of this function is taken as this will retain a maximum at the same parameter values, while being easier to derivate since we now have a sum instead of a product. Finally the negative of this log likelihood is taken as this is slightly easier to work with, which results in a minimum being looked for rather than a maximum. The function is then $-\sum_{d \in D}(t_{d} ln(P_{d})+(1-t_{d}) ln(1-P_{d})$.
+
+The first step in finding a solution to this minimization problem is taking the first derivatives of this function in all the parameters. The logistic function has the practical characteristic that its derivative in $x$ is $\sigma (x) (1- \sigma(x))$. The whole derivision can be seen in formula \ref{eq:der1}. Here $\phi_{d}$ is the data for data-point $d$ and is introduced as the derivatives of $x$ in all the parameters. This is possible as $x$ is a linear function in all the parameters. The second to last step is only possible since t can only be 1 or 0. 
+
+
+\begin{equation}
+\label{eq:der1}
+\begin{split}
+-\sum_{d \in D}(t_{d} \frac{1}{P_{d}} P_{d} (1-P_{d})\phi + (1-t_{d}) \frac{1}{1-P_{d}}(1-P_{d}) (1-(1-P_{d}))(-1)\phi_{d}) &=  \\
+-\sum_{d \in D}(t_{d} (1-P_{d})\phi + (1-t_{d})(1-(1-P_{d}))(-1)\phi_{d}) &= \\
+-\sum_{d \in D}(t_{d} (1-P_{d})\phi + (1-t_{d})(-P_{d}))\phi_{d}) & = \\
+-\sum_{d \in D}(t_{d}-P_{d})\phi_{d} &= \\
+\sum_{d \in D}(P_{d}-t_{d})\phi_{d} &
+\end{split}
+\end{equation}
+
+
+
+The first derivatives would be sufficient to perform gradient descent, but this introduces the complexity of finding the right step-size (function). The Newton-Raphson method is an alternative, which can find the parameters where all the first derivatives are 0. For Newton Raphson it is necessary to find the derivatives of the functions we are want to reach zero (i.e. we need all the second derivatives, which is the Hessian). The Hessian is straightforward to obtain as \sum_{d \in D}($P_{d} (1-P_{d}) \phi^{T}*\phi$) where $\phi$ is seen as a row vector. Now the second derivative can be written as a single matrix multiplication: $\Phi^{T} R \Phi$ where $R$ is a diagonal matrix with $P_{d} (1-P_{d})$ on the diagonal. Now the Newton-Raphson method can be applied to find a minimum to the -log likelihood of the data.
+
+Simply finding a minimum is not enough. We want to be sure that we actually find the minimum. In the case of logistic regression there is only one minimum and this must thus be the minimum that is found. The reasoning as to why this is true is explained in this paragraph. That the minus log likelihood has only one minimum is because it is a convex function and a convex (twice differentiable) function always has a semi-definite Hessian (and vice versa). For the Hessian to be semi-definite it is required that for any possible real valued vector $x$, $x^{T}Hx\gec 0$. In the previous paragraph it was established that the Hessian in this case is $\Phi^{T} R \Phi$. Taking $a=\Phi x$ we are left with $a^{T}Ra\gec 0$ as the necessary condition for the Hessian being semi-definite. Since the left side of the equation turns into a sum of squares multiplied by elements from R (which are all zero or positive), this equation must hold. The minus log likelihood is thus a convex function and a found minimum must be the global minimum.
+
 
 \pagebreak 
 \section{Glossary}
@@ -543,7 +564,7 @@ Making a start with using terms consistently, plus I generally feel that a gloss
   \item[Item] A problem (step) in the ITS to which a single answer can be given
   \item[Knowledge Component] A skill, piece of knowledge etc. that is associated with one or more items and in which students can have a level of competence (named 'skill' here)
   \item[paramater] A type of parameter used in one of the models (e.g. $\beta$)
-  \item[paramater value] The value of a parameter belonging to a specific case (e.g. the value of the $\theta_{0}$ parameter belonging to student nr 10)
+  \item[paramater value] The value of a parameter belonging to a specific case (e.g. the value of the $\theta_{0}$ parameter belonging to student number 10)
   \item[Question] An instance of an item, as asked to a single student
   \item[Skill] Level of skill of a single student
 \end{description}
