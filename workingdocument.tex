@@ -109,6 +109,7 @@ In IRT the item information function is most important as it is used to choose i
 %The idea of the information function is adapted to the learner models later in this thesis. As none of the parameters are known the  
 
 \subsubsection{Assessment of Parameter Values}
+\label{sec:asses}
 Measurements of how well the model fits the data can be obtained rather in a straightforward manner. The objects of interest in IRT is not the prediction itself, but rather the values of the parameters as they are taken to represent characteristics of items and students. These parameter values cannot be directly observed, which poses a challenge in assessing the obtained parameter values. It might be possible through the use of experts to get an indication whether the parameter values are plausible, but this would at least be costly and still poses additional problems (e.g. even experts amongst each others can disagree). There is thus no easy direct way to check the values of the parameters. In \cite{hambleton} Hambleton puts forward a recommendation for three types of indirect evidence to inspect the parameters from a fitted model:
 
 \begin{quote}"[J]udgements about the fit of the model to the test data [should] be based on three types of evidence: 1. Validity of the assumptions of the model for the test data 2. Extend to which the expected properties of the model (e.g., invariance of item and ability parameters) are obtained 3. Accuracy of model predictions using real and, if appropriate, simulated test data."[p.55]
@@ -240,96 +241,102 @@ The method of using simulated data in estimating parameter variance was used in 
 \end{comment}
 \section{Research Question}
 \label{sec:RQ}
-\todo{Considering to use the term invariant as is done in IRT}
-The main question looked into in this thesis is "When are parameter values found in fitting IRT based models distinguishable?". The interpretation of this question is specified in this section and some subquestions are defined which provide structure for the conducted experiments and the discussion of the results. The questions are each formulated in a subsection and referred to throughout the rest of this thesis.
+In this section the main research question is introduced along with the research approach. Some aspect of the research are highlighted and some complimentary sub questions are formulated. The methods described in this section only form an outline, which is further fleshed out in the next section.
 
-Distinguishable here refers to the need of knowing if the values of parameters are distinct rather than knowing how reliable any particular value is. I.e. the important question would be 'If the value for Tim's initial knowledge is higher than John's is this actually correct?' Thus instead of looking at how reliable particular values obtained in fitting the model are, it is looked at how reliable the ordering of the different values are.
+\subsection{Mainquestion: parameter invariance}
+Hambleton's statement that invariance of parameter values is 'the cornerstone of IRT' is taken as the basis for this thesis. The method used here differs from his prescribed method of splitting the data in two and plotting the fitted values of the parameters against each other. A more quantifiable approach is taken by splitting the data in more than two parts and calculating the standard deviation over the parameters. Splitting the data into parts poses some issues as to how the data should be split. In this research the parts are made by splitting the data per student. The details and reasons of this are explained in the next section, but the effect for the research question is that only the parameters that are defined per KC will be looked at. The main research question looked into in this thesis is "To what extent are the knowledge component parameters parameters invariant?"
 
-%Distinguishable will not have a clear distinguishable or not answer, but will rather have
-There are different levels on which distinguishable can be looked at. In the question above it is on the level of two specific parameters. The default level on which this question will be answered is on the level of parameter type: how well are all the parameters of a particular type distinguishable from each other (macro level). Nevertheless some energy is put into exploring this question on the micro level: i.e. can we say something about how distinguishable a specific parameter is from other parameters?
+\subsection{Aspect:Different models and different domains}
+This main question will be looked at for the three different multidimensional IRT based learner models defined in the models section. There are also quite some different ITSs that provide data in a form that is suitable for the IRT based models under investigation. The structure of the data between these ITSs and even between different subjects within the same ITS can be quite different. Invariability of the different models may be different for each of these. To gain a broader sense of invariability, three different datasets are used to represent three different domains. Two from different mathematics programs within the same ITS and another from a different ITS.
 
-When on the one hand refers to the fact that distinguishable will depend on some factors, such as how much and what data is used in fitting the model. When also refers to finding conditions that indicate how distinguishable the parameters are. In later sections it is seen that finding the distinguishability of parameters is complex, time consuming and restricted to subsets of the data. Thus finding other, more easily obtained measures that indicate distinguishability would be favorable.
+\subsection{Sub-Question: Influence of Amount of Data}
+Amount of data is expected to play a big role in the variability of parameter values. For this the subquestion "What is the influence of the amount of data on invariability?" is researched. The expectation is that as more data is used the parameter values become more invariable. It will be of interest to see how much of a difference this makes and how much room there might be for improvement by adding more data. The method of researching this subquestion is by increasing the number of parts used in answering the main question. By using more parts, the data per parts will be less and thus the variance for less data will be estimated.
 
-\subsection{What is the influence of the amount of data on distinguishability}
-It is expected that simply increasing the amount of data while holding the number of parameters constant will improve the estimation of those parameters and thus increase distinguishability. 
+\subsection{Sub-Question: Parameter-type Ordering Invariance}
+In the research of Roijers et al. discussed in section \ref{sec:RW} the authors did not look at the variance of parameters when researching the model fitted on real data, but rather looked at if the orderings of the parameter values within a parameter type were different. Thus not the variance per parameter is looked at, but rather the ordering of values within a parameter type is checked: i.e. is each parameter still in the same place when ordering on the magnitude of the values. This method is used here as well. So not only the invariance of the parameters is investigated, but also the invariance of the parameter ordering within each parameter type. This is done because, just like in the case of Roijers et al. the interest is not only in the values of the parameters, but rather in whether or not the ordering of the parameters is actually correct: i.e. we don't want to know how much more difficult one KC is compared to another, just which one is more difficult. To look into this, rank-order correlations of each parameter-type between splits are used. This leads to the sub-question "To what extent are the orderings of the KC parameter types invariant?" 
 
-\subsection{How does distinguishability differ between domains?}
-There are some quite different ITSs that provide data in a form that is suitable for the IRT based models under investigation. The structure of the data between these ITSs and even between different subjects within the same ITS can be quite different. Additionally, learning is a complex matter for which many differences between classes using the same ITS can already impact how well the model works. Therefor different datasets are looked at to represent different domains.
+\subsection{Sub-Question: Inherent Variance}
+In IRT the information function plays an important role in estimating if the data is sufficient for the parameters to possibly be invariant at all. This variance that is inherent to the model will also be investigated in this research as it could both provide an idea on whether a model's parameters could be sufficiently invariant at all and also provide more insight by providing a baseline for what would a normal amount of variance. This aspect of the research is caught by the sub-question "To what extent is variability of parameters expected given the stochasticity of the model?"
 
-\subsection{How can we easily know that parameter values are distinguishable?}
-This subquestion refers to the second interpretation of 'when' in the main research question: for some measures that are more easily obtained than the distinguishability of parameters it will be checked how well they relate to the distinguishability of parameters, both on the macro level and the micro level.
+\subsection{Sub-Question: Foreseeing Variance}
+Finally some measures will be looked at that might help predict the invariability of the parameters. Two of these measures are inspired by the third of Hambletons' points in \ref{sec:asses}. The average log likelihood of the data and the accuracy of the models prediction will be compared to the invariability of the model. Finally it will be checked to see if the inherent variance found for a parameter value is a good indication of the actual variance of that parameter. This part of the research can be formulated in the final subquestion: "Can the variability of the model be indicated by other measures?"
 
-\subsection{To what extent is distinguishability attributable to stochasticity of the model?}
-In section ref{sec:inherent} it was explained how part of the variance is caused by the stochasticity of the model. It is interesting to see what role this stochasticity plays here as the model cannot do better than this bound. Additionally this variance (which is easier to obtain) may correlate with the total variance helping in answering subquestion 3.
-
-
+In summary the sub-question are listed below and numbered for reference throughout this thesis.
+\begin{enumerate}
+  \item What is the influence of the amount of data on invariability?
+  \item To what extent are the orderings of the KC parameter types invariant?
+  \item To what extent is variability of parameters expected given the stochasticity of the model?
+  \item Can the variability of the model be indicated by other measures?
+\end{enumerate}
 
 \section{Method}
+In this section first some metrics that are used for various aspects of this research are explained. Then the general method of creating splits for the main research question is explained followed by how the data is cleaned. Then the methods for obtaining the variance and inherent variance are described in the context of the splitting method. Finally some characteristics of the datasets that represent different domains are given to reveal the differences between them.
 
+\subsection{Splitting Data to Observe Variance}
+\label{sec:splits}
+In order to get an idea of the variance of parameters in reality, data is split into multiple parts. The same model is fitted on each part of the data (from now on called a part) and the variance for each parameter can then be calculated over the models fitted to each different part. 
 
-\subsection{Model Performance}
+The split is made by randomly distributing the students over the different parts. Each student is thus found in only one part and all questions belonging to that student are found in that part. This was done for a few reasons. First, this way of splitting keeps the data as much as possible in a grouping that can be seen in a dataset from an ITS.  Also, splitting the model according to KCs is more difficult as items can belong to multiple KCs. Also since there are more students than KCs, variance estimates for students would be more difficult as parts would more easily not contain any records of a single student. Finally, a practical matter, the count of how often a student has answered a question concerning a knowledge component is implicitly available in the models. Variance of the parameters that are defined per student are thus not obtained by this method, only variances for the the KC parameters.
 
+A model is also fit on the entire data-set. The variance within each parameter type is then used to normalize all the individual parameter variances from the splits. These normalized variance values are more easily interpretable as they are relative to the spread in their corresponding parameter type. Otherwise variances of learning rates would seem relatively low (as these values are generally low), while those of item difficulty seem relatively high.
+
+In order to answer sub-question 1, splits with different numbers of parts are made. Five different splits are used here with 6,8,12,16 and 32 parts. The split with 6 parts will have the most data and the split with 32 parts will have the least. It should be noted that the split with the more fewer parts will have a higher second order variance for the found variance of parameters.
+
+\subsection{Obtaining Variance of Orderings}
+Besides looking at the variance of individual parameters we also want to see if the ordering of parameters' magnitude within a parameter type is similar to the ordering of those parameters in a model fitted on a different part of the data. Rank-order correlation measures can be used to indicate how similar two orderings are. They take a set of paired values as input and return a single value. The paired values in our case would be a parameters value from one model and the same parameter's (belonging to the same KC) value from another model. Rank orders are made for both values meaning that every value is replaced with its rank (i.e. 1 for the highest value, 2 for the second highest). A correlation is then made between the two rank orders, where a value of 1 means that if the one value is the x highest value, the paired value in the other set is also the x highest value. A rank order correlation of -1 means the opposite: if one value is the  highest, the paired value in the other set is the x lowest value. In our example we would expect a positive rank order correlation value. Nevertheless we do not expect a value of 1 since we expect variance in the parameters to prevent the ordering from being exactly the same. 
+
+For comparing two orderings of the same parameter-type we will use Kendall's Tau. Kendall's Tau looks at all possible combinations of two elements from the set and looks whether or not the ordering of their paired values is the same. Formula \ref{eq:tau} shows the definition for Kendall's Tau, where $S$ is the number of tuples where the relation for both elements of the pairs is the same and $D$ where the relation is different. For example if we take the tuple $(\beta_{2},\beta_{5})$ and in our first model $(\beta_{2}>\beta_{5})$ and in our second model $(\beta_{2}<\beta_{5})$ this tuple would add one to D. $n$ is the number of paired values. The denominator is then equal to the number of possible tuples within the set of values.
+  
+\begin{equation}
+\label{eq:tau}
+\tau=\frac{S-D}{.5 n (n-1)}
+\end{equation}
+
+The reason for using Kendall's Tau is that it can serve as a sort of accuracy measure for telling parameters apart. In $frac{\tau+1}{2}$ of the cases a parameter that seems greater than another parameter in the model trained on that part of the data will actually turn out to be greater when the model is trained on a different part. In the experiment the average tau value of every model compared to every other in that split will be calculated, resulting in a single value for every split.
+
+\subsection{Inherent Variance}
+Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in models based on IRT as discussed in subquestion 3.
+
+In section \ref{sec:inherent} information functions were discussed. The introduction of different learning rates for correct and incorrect answers introduces a problem: the data is now dependent on the labels. This means that when looking at alternative parameter values from alternative labels, these changes in data are not taken into account in an information function. This issue makes it difficult or even impossible to create an information function, thus a different approach is taken.
+
+The situation described by Baker in section \ref{sec:inherent} can also be achieved by simulating the model. In the simulated approach, first the parameters are determined by fitting the model on the data (here the labels do have their influence on the result). The found parameters are then used to stochastically generate new labels for the data. This means that if the model predicts a .2 probability that the question is answered correctly, 20\% of the time the label will be 1 and 80\% of the time the label will be 0. In the PFA model this generated answer will also influence further probabilities due to the different learning rates for correct and incorrect answers to questions. Multiple sets (10 in our experiments) of labels are generated for the data in this fashion, after which the same model is fitted again on these sets. The inherent variance of every parameter is then estimated by calculating the variance of that parameter over the different trained models.
+
+For our experiments subquestion 3 will also be applied to subquestion 2 and thus the Kendall's tau value is also calculated between every pair of generated models to see how inherent variance mixes up the order of the variables. The average $\tau$ value of all these pairs is used as a one metric to see the inherent invariability of the ordering of parameter values. 
+
+In the experiment inherent variance and order variance are calculated for each part of every split, since the data in every part can be (very) different and thus have a large influence on the found inherent variances. The average of the variances and $\tau$ values is taken per split, so that they can be compared to the values found per split for the observed data. 
+
+\subsection{Indicators of Variance}
 \label{sec:perf}
-The most common performance measure used in the context of ITS learning models is some measure of accuracy of model predictions on next-item student performance. Although this research looks into the values of model parameters and is less concerned with other measures of performance an accuracy measure is still used. The main rationale behind this relates to subquestion 3 as the accuracy of a model may hold some relationship to how well the parameters are matched. This would be especially useful as accuracy measures are relatively easy to obtain and are often already looked at in ITSs. 
+As can be seen in this section the methods used to obtain the variance of the parameters is quite complicated. They take quite some time and the available data is split into parts, making this method unable to make statements about variance of parameters when the whole dataset is used. In the 4th subquestion the question is put forward if perhaps some other measures, that are easier to obtain could be a good indicator for the variance of the parameter.
 
-The specific accuracy measure used for this research is A' (pronounced a-prime) \cite{modelreview}. For this measure two items are represented to the model, one which was answered correctly and one which was answered incorrectly. The model is used to determine which is which. The advantage of this method is that "values of A' are statistically comparable across models and data sets" \cite{modelreview}. In order to create a testset the last seven observations of every student are withheld as a test-set. This way of creating a test-set might skew the results towards poorer performance than if the last 10\% of observations for every student was taken as poorer performance is expected for students of whom few questions have been observed. On the other hand taking the last 10\% of observations per student would favor models in which some students answer the majority of questions. In the end either method is defensible and the method used should be taken into account when comparing A' values of datasets where a testsets were selected in a different way.
+In this subsection a few possibilities are put forward. First two global measures that say something over the entire model and thus could only be used to indicate something on the global level of how high variance would be on average. The last measure, the internal variance says something about each individual parameter though and might could thus indicate how high the variance of individual parameters is.
 
-Log likelihood of the data given a model is another measure that plays a large role in this specific context as this is what is maximized in fitting the model. Although the log likelihood value might not be very informative, it does give an indication of how well the model fits the data-set and in combination with the measured accuracy one can get an idea to what extent over-fitting occurs. To be able to compare this value over different runs it will be normalized by dividing by the number of data points.
+\subsubsection{A'}
+The most common performance measure used in the context of ITS learning models is some measure of accuracy of model predictions on a test-set. An accuracy of prediction measure would be especially useful as an indicator of variance, since they are relatively easy to obtain and are often already looked at in ITSs. 
+
+The specific accuracy measure used for this research is A' (pronounced a-prime) \cite{modelreview}. For this measure two items are represented to the model, one which was answered correctly and one which was answered incorrectly. The model is used to determine which is which. The advantage of this method is that "values of A' are statistically comparable across models and data sets" \cite{modelreview}.
+
+In order to create a testset the last seven observations of every student are withheld as a test-set. This way of creating a test-set might skew the A' value towards poorer performance than if the last 10\% of observations for every student was taken, because poorer performance is expected for students of whom few questions have been observed, which now form a larger portion of the test-set. On the other hand taking the last 10\% of observations per student would favor models fitted on data where a few students answer the majority of questions. In the end either method is defensible and the method used should be taken into account when comparing A' values of datasets where a testsets were selected in a different way. When calculating the A' values for a part only those students who's questions are in that part of the data are used.
+
+\subsubsection{Average Log Likelihood}
+Log likelihood of the data given a model is another measure that plays a large role in this specific context as this is what is maximized in fitting the model. The log likelihood gives an idea of how well the model fits the data. Log likelihood is also used in the BIC and AIC criteria that are used in \cite{lfa} to determine model fit. Although these measures are preferable because they protect from simply favoring more complex models, the problem with these measures is that they cannot be compared when models are fitted to different datasets, especially when the amount of data differs as is the case here.  To compare log likelihoods of models fitted on different sized data-sets, it will be normalized by dividing it by the number of data points.
+
+\subsubsection{Relating Inherent Variance and Observed Variance}
+The inherent variance can be obtained without splitting up the data. Although it is expected that the observed variance will be higher than the inherent variance, the inherent variance could be a good indicator of the observed variance. In this research it is not tried to make predictions of observed variance by using the inherent variance and other measures, but rather it will be checked if the ordering of inherent variance and observed variance are correlated. Again a rank correlation measure will be used, since a good feature of a rank correlation value can indicate whether there is a monotonic relation between the pair of values, without applying a specific monotonic function. 
+ 
+The other rank order measure used for this problem is Spearman's rho (The word rho will be used rather than $\rho$ to distinguish it from the parameter). The formula for Spearman's rho is seen in formula \ref{eq:rho} Where $d_{i}$ is the difference in rank for the $i$th pair of values and n is the total number of pairs.
+\begin{equation}
+\label{eq:rho}
+1-\frac{6 \sum\limits_{i=1}^n d_{i}^{2}}{n(n^{2}-1)} 
+\end{equation}
+The difference with Kendall's tau is that more emphasis is put on 'outliers' (large differences in ranks between pairs). This is done as outliers are more problematic in fitting a function than minor deviations in the rank-orderings.
 
 
+\begin{comment}
 \todo{currently this part is out of the question. I might bring up this discussion again:
 Additionally a method that from IRT \cite{hambleton} will be used. After initially fitting the data will be split in two along student initial knowledge, such that one set contains all the lowest values and the other all the highest. Then the fitting will be done again on both new data-sets. If the assumptions of the model were correct the parameters for items should be roughly the same. It is expected though that this will not hold as there probably is a relation between having a high initial skill and how fast one learns knowledge components}
 
 Although the primary way in which model parameters will be examined is described above, alternative methods will be used where applicable. Some data-sets contain additional information that can be used to more directly draw conclusions on whether found parameter values are meaningful. Two examples from the related research section are \cite{eirt} where expert opinions and an indication of what groups have higher initial knowledge were used and \cite{ktpfa} where a pre-test was used as an indicator of initial knowledge.
-
-\subsection{Rank Order Correlation Measures}
-Rank order correlation measures are used when comparing a set of paired values. For example the set could be a class of students and the paired values each students' height and weight. Rank orders are made for both values meaning that every value is replaced with its rank (i.e. 1 for the highest value, 2 for the second highest). A correlation is then made between the two rank orders, where a value of 1 means that if the one value is the x highest value, the paired value in the other set is also the x highest value. A rank order correlation of -1 means the opposite: if one value is the  highest, the paired value in the other set is the x lowest value. In our example we would expect a positive rank order correlation value, since taller people are generally more heavy. Nevertheless we do not expect a value of 1 since a very tall person might be lighter than a slightly shorter person. The advantage of using a rank order correlation is that it indicates that a relation exists between the two values while not restricting this relation to a particular form (e.g. linear relation)
-
-The first rank order measure that will be used here is Kendall's Tau. Kendall's Tau looks at all possible combinations of two elements from the set and looks whether or not the ordering of their paired values is the same. Kendall's Tau is then equal to $\tau=\frac{|same ordered combinations|-|different ordered combinations|}{.5 n (n-1)}$. $n$ is the number of paired values and the  denominator then boils down to the number of possible pairs within a set of values. In this thesis $\tau$ will be used to compare pairs of estimates of parameters. In this case the interpretation is that if we take two random observations from one set and see that observation 1 is bigger than observation 2 in $frac{\tau+1}{2}$ of the cases observation 1 in the other set will also be bigger than observation 2 in that other set.
-
-The other rank order measure used is Spearman's rho (The word rho will be used rather than $\rho$ to distinguish it from the parameter). The formula for Spearman's rho is $1-\frac{6 \sum\limits_{i=1}^n d_{i}^{2}}{n(n^{2}-1)}$ Where $d_{i}$ is the difference in rank for the $i$th pair of values and n is the total number of pairs. The difference with Kendall's tau is that more emphasis is put on 'outliers' (large differences in ranks between pairs). Spearman's rho will be used to compare sets of different paired measurements to see if a relation could be found between them, which is more heavily impaired by outliers.
-
-\subsection{Inherent Variance}
-Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in models based on IRT.
-
-In section \ref{sec:inherent} information functions were discussed. The introduction of different learning rates for correct and incorrect answers introduces a problem: the data and the labels are no longer independent and therefor the information function is no longer independent from the labels. This issue makes it difficult or even impossible to create an information function, thus a different approach is taken.
-
-The situation described by Baker in section \ref{sec:inherent} can also be achieved by simulating the model. In the simulated approach, first the parameters are determined by fitting the model on the data (here the labels do have their influence on the result). The found parameters are then used to stochastically generate new labels for the data. This means that if the model predicts a .2 probability that the question is answered correctly, 20\% of the time the label will be 1 and 80\% of the time the label will be 0. In the PFA model this generated answer will also influence further probabilities due to the different learning rates for correct and incorrect answers to questions. Multiple sets (10 in our experiments) of labels are generated for the data in this fashion, after which the same model is fitted again on these sets. The inherent variance of every parameter is then estimated by calculating the variance of that parameter over the different trained models.
-
-Kendall's rank-order is also calculated between every pair of generated models to see how inherent variance mixes up the order of the variables. The average $\tau$ value of all these pairs is used as a final metric to see the inherent distinguishability of the parameter values.
-
-\subsection{Observed variance}
-\label{sec:splits}
-In order to get an idea of the variance of parameters in reality, data is split into multiple parts. The same model is fitted on each part of the data (from now on called a split) and the variance for each parameter can then be calculated over the different models. 
-
-The focus here lies on the KC parameters. Also the splitting of the data should retain the way the data might be seen by an ITS in real life. Therefor the data is split on the basis of students: every split contains the data of some of the students and every student in a split does not occur in another split. The same split is done on the test set such that the model trained on the data of specific students is also tested on the test set of those particular students.
-
-
-As was done for inherent variance, $\tau$ is calculated between every possible pair of splits and the average is used a the final metric to see the observed distinguishability of the parameter values.
-
-To get the correct inherent variance associated with the observed variance, the inherent variance (and $\tau$ values) are calculated over each individual split and averaged over all the splits to find global values.
-
-To investigate subquestion 2, splittings with a different number of splits are made, such that there is a decreasing number of students per split. It should be noted that this means that for the larger splits, a lower number of parameter values are present and that thus the second order variance will be higher.
-
-
-\begin{comment}
-\subsection{Representation of variance}
-The variances discussed in the previous sections are not easily interpretable as it is not directly clear whether a variance is large or small for a particular parameter. To account for this problem the following reliability measure for every parameter value will be used:
-
-\begin{equation}
-\label{eq:reliability}
-R(\beta_{n}) = 1-\frac{\sigma^{2}(\beta_n)}{\sigma^{2}(\beta_{n})+\sigma^{2}(\beta)}
-\end{equation}
-
-Where $\beta_{n}$ is the $\beta$ parameter of the n-th KC, $\sigma^{2}(\beta_{n})$ is its variance and $\sigma^{2}(\beta)$ is the variance over the $\beta$ parameter of all KCs in the model. The reliability can be calculated for both the inherent and observed variance and can be calculated for any parameter, although $\beta$ was taken as an example here. Two issues should be noted here. First a normal distribution of the parameters is assumed here and when calculating from different reliabilities of different parameters the harmonic mean should be used.
-
-\begin{figure}
-\includegraphics[width=\textwidth]{images/reliVSprob2.png}
-\caption{Relation between reliability and percentage of correctly distinguished parameters}
-\label{fig:reli}
-\end{figure}
-
-When considering the consistency of parameters, a good way to look at them is distinguishability. For example, if we were to look at every possible pair of parameters, in how many cases would the one that is seemingly largest, actually be the largest? The reliability over the average variance of a parameter type is directly related to this measure (see figure \ref{fig:reli})
 \end{comment}
 
 \subsection{Data cleaning}
@@ -337,12 +344,12 @@ When considering the consistency of parameters, a good way to look at them is di
 Splitting the data may exacerbate some of the issues that can be encountered in fitting the model. One example is when all questions associated with a student or a KC are answered correctly or incorrectly. This makes the fitting algorithm want to assign infinite values to parameters. Another problem is when for a KC there is such a limited number of questions answered that learning rates cannot be estimated.
 
 To prevent these issues the following steps are taken. On the whole dataset, students that answer all questions correctly or incorrectly are removed. This is after having put the last 7 observations in the testset, which means that students who answered less than 9 questions were all dropped from the data. 
-In every split, KC's for which every question is answered correctly or incorrectly is not taken into account for that split. Additionally if for a KC there is less than two questions answered correctly or incorrectly that KC is not taken into account for that split. This means that this KC is removed from the items and any item that no longer contains a KC is dropped from the data. This is done iteratively until the data adheres to these conditions.
+In every split, KC's for which every question is answered correctly or incorrectly is not taken into account for that split. Additionally if for a KC there is less than two questions answered correctly or incorrectly that KC is not taken into account for that split. This means that this KC is removed from the items and any item that no longer contains a KC is dropped from the data. This is done iteratively until the data adheres to these conditions. How many KCs and students were left out in every split is represented in the results to show how big of an issue this was and what impact it might have on the results.
 
 
 \subsection{Domains}
 \label{sec:domain}
-In generating the data there are many other factors that might play a role in the performance of the models. Among those factors are the values that the parameters will be given, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in section \ref{sec:RQ} these factors are not explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data. The different datasets and some of the characteristics are described in this section.
+In generating the data there are many other factors that might play a role in the determining the variance of the parameters of the models. Among those factors are the values that the parameters have, the distribution of knowledge components over the items, the ratio of students to items etc. As indicated in section \ref{sec:RQ} these factors are not explored methodically and extensively, but rather a few different datasets are used to represent some of the variation naturally found in this kind of data. A short description of where these datasets come from are given below. In table \ref{tab:datdat} some statistics are given for each dataset. The number of questions is equal to the total number of data-points used for fitting the models after taking out the test-set and doing an initial cleaning. The number of knowledge components and students show how many were removed from the dataset and how many still remain. Only a cleaning sweep over the entire data is taken into account here. Information on how many KCs and students were dropped due to the making of splits is given in the results section. Table \ref{tab:QKC} counts for each number of associated KCs, how many questions are asked in each dataset. This was chosen over showing the number of items per number of associated KCS, since in the data the distribution of how how often items are seen is skewed. 
 
 \subsubsection{Bridge to Algebra}
 The first data-set is one of the datasets used in the 2010 KDD cup on education data mining. The data is from Carnegie Learnings' Cognitive Tutor Software meant for high school-students aged 15-18. \cite{ct} provides an overview of some of the features of this program. The data was obtained from the Bridge to Algebra course during the school year 2006-2007 \cite{bridge}. This dataset will be referred to as the Bridge dataset.
@@ -353,16 +360,18 @@ This dataset was also provided in the 2010 KDD cup. The data is also obtained fr
 \subsubsection{Assistment}
 This dataset is quite different from the other two as it is taken from a web-based ITS named Assistment whose details and development story can be found in \cite{razzaq}. The data is from 12 to 14 year old students and was used in \cite{ktpfa} which was discussed in section \ref{sec:RW}. The data does not only contain data from usage of the ITS but also data from a pre-test. This dataset will be referred to as the Assistment dataset.
 
-\subsubsection{Data information}
 \begin{table}
+
     \begin{tabular}{| l | l | l | l |l|}
     \hline
-    Dataset & \# questions & \# KCs(cleaned) &\# students(cleaned) & \% correct (testset) \\ \hline
+    Dataset & \# questions & \# KCs(removed) &\# students(removed) & \% correct (testset) \\ \hline
     Bridge & 1,814,398 & 455(34) & 1129(17) & 83 (80)\\ \hline
     Algebra & 585,557 & 104(6) & 564(10) &  76 (75)\\ \hline
     Assistment & 110,842  & 106(0) & 425(20) & 65 (59)\\
     \hline
     \end{tabular}
+    \label{tab:datdat}
+    \caption{Some statistics for each dataset}
 \end{table} 
    
 \begin{table}
@@ -374,6 +383,8 @@ This dataset is quite different from the other two as it is taken from a web-bas
     Assistment & 56521 (0.510) & 37356 (0.337) & 11770 (0.106) & 4237 (0.038)&958 (0.009)\\
     \hline
     \end{tabular}
+    \label{tab:QKC}
+    \caption{How often questions have a particular number of KCs associated with them. The proportion of the total is given in brackets}
 \end{table}  
 
 \begin{comment}
