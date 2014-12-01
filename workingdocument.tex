@@ -345,6 +345,7 @@ Splitting the data may exacerbate some of the issues that can be encountered in 
 
 To prevent these issues the following steps are taken. On the whole dataset, students that answer all questions correctly or incorrectly are removed. This is after having put the last 7 observations in the testset, which means that students who answered less than 9 questions were all dropped from the data. 
 In every split, KC's for which every question is answered correctly or incorrectly is not taken into account for that split. Additionally if for a KC there is less than two questions answered correctly or incorrectly that KC is not taken into account for that split. This means that this KC is removed from the items and any item that no longer contains a KC is dropped from the data. This is done iteratively until the data adheres to these conditions. How many KCs and students were left out in every split is represented in the results to show how big of an issue this was and what impact it might have on the results.
+Note that this may have as an effect that for some KCs parameter values are only found in a few parts of a split. Parameters of KCs that are only found in less than three splits are left out of the results of the experiment as well. The number of KCs left out is displayed in the results section.
 
 
 \subsection{Domains}
@@ -362,16 +363,16 @@ This dataset is quite different from the other two as it is taken from a web-bas
 
 \begin{table}
 
-    \begin{tabular}{| l | l | l | l |l|}
+    \begin{tabular}{| l | l | l | l |l|l|}
     \hline
-    Dataset & \# questions & \# KCs(removed) &\# students(removed) & \% correct (testset) \\ \hline
-    Bridge & 1,814,398 & 455(34) & 1129(17) & 83 (80)\\ \hline
-    Algebra & 585,557 & 104(6) & 564(10) &  76 (75)\\ \hline
-    Assistment & 110,842  & 106(0) & 425(20) & 65 (59)\\
+    Dataset & \# questions & \# KCs(removed) &\# students(removed) & \% correct(testset)&\# items \\ \hline
+    Bridge & 1,814,398 & 455(34) & 1129(17) & 83(80)& 129,553 \\ \hline
+    Algebra & 585,557 & 104(6) & 564(10) &  76(75)& 173,650\\ \hline
+    Assistment & 110,842  & 106(0) & 425(20) & 65(59)& 807\\
     \hline
     \end{tabular}
-    \label{tab:datdat}
     \caption{Some statistics for each dataset}
+    \label{tab:datdat}
 \end{table} 
    
 \begin{table}
@@ -383,8 +384,8 @@ This dataset is quite different from the other two as it is taken from a web-bas
     Assistment & 56521 (0.510) & 37356 (0.337) & 11770 (0.106) & 4237 (0.038)&958 (0.009)\\
     \hline
     \end{tabular}
-    \label{tab:QKC}
     \caption{How often questions have a particular number of KCs associated with them. The proportion of the total is given in brackets}
+    \label{tab:QKC}
 \end{table}  
 
 \begin{comment}
@@ -424,20 +425,51 @@ For every split into a number of parts and every model the following will be rep
 \end{comment}
 
 \section{results}
-\subsection{Orderings within parameters}
-In figure \ref{fig:ranks} the results on first glance are generally as is expected: the tau of parameters improves as more data is used and the rank orders of simulated data are higher than those over splits of observed data. At a second look a few things stand out. Sometimes there seems to be some noise in the experiments (for example the $\eta$ parameter in the Algebra dataset). Furthermore the increase in tau for $\rho$ is small, if existent at all, for the tau over simulated data. Another interesting observation is that the rank orders on the observed data get closer to the rank orders of the simulated data as more data is used and that the gap between the two is smaller for $\beta$ than it is for the learning parameters. Finally it would seem that there is still room for improvement for Tau when adding more data.
 
 \begin{figure}
+\includegraphics[width=30mm]{images/legend.png}
+\caption{Legend for all figures in this section}
+\label{fig:legend}
+\end{figure}
 
+\subsection{Missing KCs}
+To see the impact on how many KCs were missing in each run of the experiment on each split it was noted during the experiment how many KCs were cleaned out from every part in a split and for how many KCs no variance was obtained because a KC was missing from too many parts. In table \ref{tab:kcmis} it can be seen how many KCs were missing on average (the splits were remade for every model). The number outside brackets is how many KCs were left out of that experiment completely. The number between brackets indicates how many KCs were on average missing from each part in the split of the experiment, including those that were left out of the experiment in the end. 
+
+\begin{center}
+\begin{table}[!htbp]
+\begin{tabular}{| l | l|l|l|l|l|}
+
+    \hline
+    Splits & 6  & 8 & 12 & 16 & 32 \\ \hline
+    Bridge &  87.3(90.1)& 85.7(99.7)& 88.0(121.2)& 87.7(137.1)& 89.3(190.4) \\ \hline
+    Algebra & 7.3(8.5)& 6.7(8.9)& 6.7(11.5)& 7.0(14.0)& 7.7(21.3) \\ \hline
+    Assistment & 0.7(1.2)& 0.7(1.1)& 1.0(1.3)& 1.0(1.8)& 1.0(5.7) \\ \hline
+
+\end{tabular}
+\caption{Average number of KCs left out of experiment with average number of KCs removed per split within brackets}
+\label{tab:kcmis}
+\end{table}
+\end{center}
+
+The KC's left out are quite constant in number; the increasing number of KCs missing per part as the parts get smaller is apparently off-set by the increasing number of parts. It does mean though that the second order variance of variances found would be higher than expected.
+
+The number of KCs left out per dataset follows the same distribution of KCs left out per dataset in the initial cleaning which was seen in section \ref{sec:domain}. For the Bridge dataset the KCs removed form almost 20\% of the total KCs. Although it is unfortunate to miss this much data, it is a sign that for many KCs in this dataset there is too little data and that average variance of parameters would probably be worse when these KCs would be included. For the Algebra dataset the problem is small and for the Assistment dataset almost non-existent.
+
+\subsection{Orderings within parameters}
+To answer subquestion 4 from the research question rank orders were calculated between the different models build within each experiment. In figure \ref{fig:ranks} the resulting average tau values can be seen from all the experiments. The $\rho$ parameters of the PFA+ models show poor rank correlations over all datasets indicating that the rankings of this parameter are very invariant. This is a big disqualifier for the PFA+ model.
+The tau values for the $\gamma$ parameter-type for both the PFA+ and LFA models are better, but still relatively low, the $\alpha$ parameter for the seIRT model does comparable on two datasets, but far worse on the third.
+The $\beta$ parameter-type has the best tau values, good for the PFA+ and LFA models and worse, but still ok for the seIRT model.
+
+\begin{figure}[!htbp]
 \centering
 \subfloat[Legend for the figures]{
   \includegraphics[width=30mm]{images/legend.png}
 }
-\subfloat[Rankorders for Bridge0506 parameters]{
+\subfloat[Rankorders for Bridge parameters]{
   \includegraphics[width=65mm]{images/bridgeallmodranksKC.png}
 }
 \hspace{0mm}
-\subfloat[Rankorders for Algebra0607 parameters]{
+\subfloat[Rankorders for Algebra parameters]{
   \includegraphics[width=65mm]{images/algebraallmodranksKC.png}
 }
 \subfloat[Rankorders for Assistment parameters]{
@@ -447,36 +479,113 @@ In figure \ref{fig:ranks} the results on first glance are generally as is expect
 \label{fig:ranks}
 \end{figure}
 
-In comparing the LFA and PFA models the rank orders of the $\beta$ parameters, and those of the $\eta$ and $\gamma$ parameters of both models are near each other. It is against expectations that the $\gamma$ parameters rank orders are so high as a simple expectation would be that both $\gamma$ and $\rho$ parameters would show lower rank orders as there is fewer data available per parameter value.
- 
-The $\tau$ for the different domains look quite similar, which is surprising given the differences in the amount of data per KC for the different domains. The improvements in Tau for the Bridge data set seem to taper off towards the end and will probably benefit least from more data, while the other models still seem to have improving tau values. 
+The conclusion here is that the LFA and PFA+ models learning rates cannot be well distinguished and that these models can generally say little about relative learning speed of different KCs. Since $\alpha$ of the seIRT model also is the only KC based influence on the learning rate, the same is true for this model. The effect the in-distinguishability of $\alpha$ has on the entire model is harder to qualify, but can be substantial. The models still distinguish between KC difficulties quite well, although the LFA and PFA+ models do this better than the eIRT model.
+
+Figure \ref{fig:ranks} also holds information for the first subquestion concerning what the influence of data is on the invariance of the parameters. The hypothesis that invariance increases as more data is used holds across the board. There seems to be no direct relation between the number of records per KC used and the tau value, failing to give a rule of thumb of how much data is needed. Looking at the characteristics of the data, there is also no other measure of amount of data that would make an obvious candidate (e.g. number of students or student per KC) and it is surprising that the three figures look quite alike despite the different amounts of data used.
+
 \subsection{Overall variance of parameters}
 \label{sec:varresults}
+\subsubsection{Overall Variance}
+To answer the mainquestion the average variance per parameter-type over all experiments is displayed in figure \ref{fig:sds}. To gain a better idea of the magnitudes of the standard deviations and to compare them across different parameter-types, each value is normalized by dividing them by the variance within the values of that parameter-type in a model fitted on the whole dataset.
+
 \begin{figure}[!htbp]
 \centering
 \subfloat[Legend for the figures]{
-  \includegraphics[width=30mm]{images/legend.png}
+\includegraphics[width=30mm]{images/legend.png}
 }
-\subfloat[Standard deviations for Bridge0506 parameters]{
-  \includegraphics[width=65mm]{images/bridgeallmodsdsKC.png}
+\subfloat[Standard deviations for Bridge parameters]{
+\includegraphics[width=65mm]{images/bridgeallmodsdsKC.png}
 }
 \hspace{0mm}
-\subfloat[Standard deviations for Algebra0607 parameters]{
-  \includegraphics[width=65mm]{images/algebraallmodsdsKC.png}
-  \label{fig:sdalg}
+\subfloat[Standard deviations for Algebra parameters]{
+\includegraphics[width=65mm]{images/algebraallmodsdsKC.png}
+
+
 }
 \subfloat[Standard deviations for Assistment parameters]{
-  \includegraphics[width=65mm]{images/gongallmodsdsKC.png}
+\includegraphics[width=65mm]{images/gongallmodsdsKC.png}
 }
 \caption{(Average) standard deviations of the different parameters}
 \label{fig:sds}
 \end{figure}
 
-Figure \ref{fig:sds} is similar to figure \ref{fig:ranks} except with standard deviations over the different splits or generated data sets instead of Kendall's Tau. The diminishing standard deviations are as expected, but both the large values as well as the small difference between variance over splits and variance over generated data sets is surprising given the graphs in figure \ref{fig:ranks}. 
+At first glance these results correspond to the results from the previous section. Some things jump out though: 1. the normalized variance, especially at splits where the parts have fewer data is extremely high 2. The difference between inherent variance and observed variance is generally low, while in the previous section the differences between the rankings were generally quite distinguished. 3. The ratio of variance of the parameters and the variance within a parameter-type should generally not be higher than 1. Investigating this problem let to the discovery that the general sizes of the parameters differ between experiments with splits into a different number of parts. The following subsection investigates this issue.
 
-The first might be explained if the different splits give very different parameter values while still largely remaining the same ordering. The second problem would still not be explained though. Upon inspection it turns out that somehow the variation within a parameter of a model fitted on a split is far larger than that of a model fitted on the whole dataset (which was used to normalize the standard deviation values). Additionally the variance within a parameter of a model fitted on generated data is again larger than that of a model fitted on the split used in generating the data. This makes that the same variance has less influence on the ordering since the nearest values of other parameters are further away. Here also lies the explanation for the out-lier of $\rho$ in figure \ref{fig:sdalg}: upon inspection, a model fitted on one of the six splits and its simulated data showed an unusually high standard deviation for $\rho$, having a big impact on the final standard deviations (as was mentioned in section \ref{sec:splits}).
 
-\todo{Ik heb deze data in een onhandig formaat en zou het kunnen agregeren en weergeven om een beter beeld te hebben van hoe dit er precies uitziet en varieert per dataset/parameter/aantal splits}
+
+
+\subsubsection{Variance within Parameter-types}
+To investigate what happens to the variance of the parameter when using parts of different sizes figure \ref{fig:parvar} displays the average variance of the parameter types in those experiments. Since this variance also differs between models fit on real data and those fit on generated models these variances have been determined separately. Finally all values are divided by the variance used to normalize the values in figure \ref{fig:sds}. Due to the large values of some parameters, especially at parts with little data, the same figure zoomed in at lower values can be seen in figure \ref{fig:parvarz}. 
+\begin{figure}[!htbp]
+\centering
+\subfloat[Legend for the figures]{
+\includegraphics[width=30mm]{images/legend.png}
+}
+\subfloat[Standard deviations for Bridge parameters]{
+\includegraphics[width=65mm]{images/bridgeallmodsparvar.png}
+}
+\hspace{0mm}
+\subfloat[Standard deviations for Algebra parameters]{
+\includegraphics[width=65mm]{images/algebraallmodsparvar.png}
+}
+\subfloat[Standard deviations for Assistment parameters]{
+\includegraphics[width=65mm]{images/gongallmodsparvar.png}
+}
+\caption{(Average) standard deviations of the different parameters}
+\label{fig:parvar}
+\end{figure}
+
+
+
+In figure \ref{parvar} the high standard deviation within the learning parameter types of the PFA+ and LFA models are striking. A possible explanation for these results is overfitting: if for example a question for a KC is answered wrong a few times early on by some students, but mostly answered correctly after those initial questions, the model will fit a very high learning rate to this KC. If more students would be present whom might continue to sometimes answer questions concerning this KC wrongly, the KC would be fitted a substantially lower learning rate value. If this is the case it would mean that too little data was used here and that experiments with (seemingly much) more data should be done. Given that already quite a bit of data is used here, this does speak against how invariant the learning parameters of the PFA+ and LFA models are. In this context it should also be noted that all values of the models made on actual data are expected to reach 1 as data is increased up to the same amount as the original dataset. The steeper ascend might mean that increasing data beyond this point will decrease the relative found variance below 1, indicating that even when using the whole dataset overfitting still occurs.
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Legend for the figures]{
+\includegraphics[width=30mm]{images/legend.png}
+}
+\subfloat[Standard deviations for Bridge parameters]{
+\includegraphics[width=65mm]{images/bridgeallmodsparvarz.png}
+}
+\hspace{0mm}
+\subfloat[Standard deviations for Algebra parameters]{
+\includegraphics[width=65mm]{images/algebraallmodsparvarz.png}
+}
+\subfloat[Standard deviations for Assistment parameters]{
+\includegraphics[width=65mm]{images/gongallmodsparvarz.png}
+}
+\caption{(Average) standard deviations of the different parameters}
+\label{fig:parvarz}
+\end{figure}
+In figure \ref{fig:parvarz} it is visible that the parameters of the seIRT do much better in this regard, although less well for the Assistment dataset, indicating that more data is desired there. Also the $\beta$ parameters of the PFA+ and LFA models are fairly ok, indicating that overfitting is not so much a problem for them at higher amounts of data. Here too the issue is larger for the Assistment dataset, indicating the need for more data.
+
+Finally the question remains open why the variance in parameters for the simulated data is even higher than that for the observed data.
+
+\subsubsection{Adapted Normalization}
+To account for this phenomena and still look at the standard deviation of parameters figure \ref{fig:sds} is repeated in figure \ref{fig:sdsalt}, but instead of using the variance in parameter-types of the model fitted on the whole data, the raw values from figure \ref{fig:parvar} are used to normalize the raw variances. This means that every datapoint has its own normalization factor instead of a single normalization factor for both the internal and observed variances of a model parameter at all different splits.
+
+\begin{figure}[!htbp]
+\centering
+\subfloat[Legend for the figures]{
+\includegraphics[width=30mm]{images/legend.png}
+}
+\subfloat[Standard deviations for Bridge parameters]{
+\includegraphics[width=65mm]{images/bridgeallmodsdsKCalt.png}
+}
+\hspace{0mm}
+\subfloat[Standard deviations for Algebra parameters]{
+\includegraphics[width=65mm]{images/algebraallmodsdsKCalt.png}
+}
+\subfloat[Standard deviations for Assistment parameters]{
+\includegraphics[width=65mm]{images/gongallmodsdsKCalt.png}
+}
+\caption{(Average) standard deviations of the different parameters}
+\label{fig:sdsalt}
+\end{figure}
+
+In figure \ref{fig:sdsalt} the variances of the parameters of the seIRT model are strikingly high. This is surprising since the tau values of this model aren't as bad. These contradictory results actually reinforce one of the reasons for using tau: the normalization step of the models parameters in the fitting procedure increase the found variance, while not meaning that the model is necessarily worse.
+
+\todo{opposite seems to be the case for the $\rho$ parameter. Why?}
 
 \subsection{Measures of fit}
 In figure \ref{fig:likely} the points belonging to the different splits can easily be distinguished: there are three groups one for each data set (from left to right, Assistment, Algebra and Bridge) and within each group the point with the highest tau value is the one with the most data associated with it. That the PFA models have a higher likelihood is to be expected as it has more parameters than the LFA models. It is also sensible that with more data in a split the likelihood goes down, since the same number of parameter values is used to explain more data. Although there is a nice relationship between tau and likelihood within each dataset, this relationship probably stems from the previous two relationships mentioned: as the amount of data goes up, so do the tau values and as the amount of data goes up, the likelihood goes down. When looking over all three datasets there actually seems to be a slightly positive relation between likelihood and tau values. The wide spread of $\tau$ values over splits of the same dataset (where the relation is quite negative) compared to the slight positive relation makes it unlikely that likelihood can be used to make inferences about the distinguishability of parameter values.   
@@ -502,25 +611,21 @@ So far the results have been looked at on a global level, now it is time to look
 In section \ref{sec:varresults} it was discovered that over the different splits there can be a significant difference in the variance of a parameter. This has as an unintended consequence that the Spearman's r values are higher when the values of the different splits overlap less. Therefor the Spearman's R values were recalculated using the average of the values in each split rather than the value over all splits combined. The results were vary similar (mostly a difference of .01) and therefor left out. 
 \begin{center}
 \begin{table}[!htbp]
-\begin{tabular}{| l || l | l ||l|l |l|}
+\begin{tabular}{| l || l | l ||l|l |l||l|l|}
 
     \hline
-     & LFA  & & PFA & &   \\ \hline
-    Dataset & $\beta$ & $\eta$ & $\beta$ & $\gamma$ & $\rho$  \\ \hline
-    Bridge     & .86 & .92 & .91 & .95 & .92 \\ \hline
-    Algebra    & .91 & .97 & .94 & .98 & .96 \\ \hline
-    Assistment & .90 & .97 & .88 & .97 & .96 \\ \hline \hline
-    Overall    & .87 & .94 & .91 & .96 & .94 \\
+     & LFA  & & PFA & & &seIRT &   \\ \hline
+    Dataset & $\beta$ & $\eta$ & $\beta$ & $\gamma$ & $\rho$ & $\beta$ & $\alpha$  \\ \hline
+    Bridge     & 0.86(0.82) & .92 & 0.91(0.87) & .95 & .92 & 0.68(0.65)&0.68(0.64) \\ \hline
+    Algebra    & 0.90(0.87) & .97 & 0.92(0.90) & .98 & .96 & 0.70(0.64)&0.74(0.72) \\ \hline
+    Assistment & 0.89(0.79) & .97 & 0.89(0.78) & .97 & .96 & 0.86(0.79)&0.88(0.83) \\ \hline \hline
+    Overall    & 0.87(0.83) & .94 & 0.91(0.85) & .96 & .94 & 0.71(0.69)&0.72(0.73) \\
     \hline
 \end{tabular}
 \caption{Spearman's R of inherent and total variance of various parameters and models over all splits}
 \label{tab:intorank}
 \end{table}
 \end{center}
-
-\todo{
-I have made graphs scatterplotting value in the mainmodel against both inherent variance found in the splits and the observed variance over the splits, but am not sure to include them as I'm not quite sure what I would have liked to learn from them. Interesting observation though is that variance doesn't appear to be higher on the edges.
-Interesting still might be to see how such a figure compares to seeing the inherent variance based on the model on whole the data instead of the splits.}
 
 \newpage
 \section{Conclusion and Discussion}
@@ -585,8 +690,9 @@ The first derivatives would be sufficient to perform gradient descent, but this 
 
 Simply finding a minimum is not enough. We want to be sure that we actually find the minimum. In the case of logistic regression there is only one minimum and this must thus be the minimum that is found. The reasoning as to why this is true is explained in this paragraph. That the minus log likelihood has only one minimum is because it is a convex function and a convex (twice differentiable) function always has a semi-definite Hessian (and vice versa). For the Hessian to be semi-definite it is required that for any possible real valued vector $x$, $x^{T}Hx\geq 0$. In the previous paragraph it was established that the Hessian in this case is $\Phi^{T} R \Phi$. Taking $a=\Phi x$ we are left with $a^{T}Ra\geq 0$ as the necessary condition for the Hessian being semi-definite. Since the left side of the equation turns into a sum of squares multiplied by elements from R (which are all zero or positive), this equation must hold. The minus log likelihood is thus a convex function and a found minimum must be the global minimum.
 
-
+\begin{comment}
 \pagebreak 
+
 \section{Glossary}
 \todo{
 Making a start with using terms consistently, plus I generally feel that a glossary would have helped me greatly in understanding papers etc.}
@@ -599,5 +705,5 @@ Making a start with using terms consistently, plus I generally feel that a gloss
   \item[Question] An instance of an item, as asked to a single student
   \item[Skill] Level of skill of a single student
 \end{description}
-
+\end{comment}
 \end{document}
