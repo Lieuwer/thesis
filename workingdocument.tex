@@ -174,7 +174,7 @@ eIRT as defined by Roijers et al does not incorporate multiple skills (KCs) per 
 
 \begin{equation}
 \label{eq:sumeirt}
-P = \sigma(\sum_{c \in KC} \alpha_{c}(\frac{\theta_{s,0}}{|KC|} + \eta_{s} t_{s,c} - \beta_{c}))
+P = \sigma(\sum_{c \in KC} \alpha_{c}(\frac{\theta_{s,0}}{|KC|} + \eta_{s} t_{s,c}) - \beta_{c})
 \end{equation}
 
 Please note that in the multidimensional case the indeterminacy where $\theta{s,0}$ and $\beta$ can both be shifted by the same amount is most likely no longer there as was described for the LFA model. The dependency between $\alpha$ and the other parameters still exists though and should still be resolved by fixing the standard deviation of $\theta_{s,0}$ to 1 and changing the other parameters accordingly.
@@ -205,9 +205,6 @@ LFA can be obtained from this model by taking $\alpha=1$, $\eta=1$ and $\gamma=\
 \subsubsection{Model issue}
 \todo{Somehow it seems to me that it is a major issue that these models are inconsistent: Students have only a single initial skill, while after learning skills diverge. This is rather odd as forgetting this past and fitting the model again would result in all these different levels being dumped into a single skill again.}
 \end{comment}
-
-\subsection{parameters}
-\todo{see to it that parameters, parameter value(s) and parameter types are consistently used and describe its use here.}
 
 \section{Related work and Background}
 \label{sec:RW}
@@ -246,14 +243,14 @@ In this section the main research question is introduced along with the research
 \subsection{Mainquestion: parameter invariance}
 Hambleton's statement that invariance of parameter values is 'the cornerstone of IRT' is taken as the basis for this thesis. The method used here differs from his prescribed method of splitting the data in two and plotting the fitted values of the parameters against each other. A more quantifiable approach is taken by splitting the data in more than two parts and calculating the standard deviation over the parameters. Splitting the data into parts poses some issues as to how the data should be split. In this research the parts are made by splitting the data per student. The details and reasons of this are explained in the next section, but the effect for the research question is that only the parameters that are defined per KC will be looked at. The main research question looked into in this thesis is "To what extent are the knowledge component parameters parameters invariant?"
 
+\subsection{Sub-Question: Parameter-type Ordering Invariance}
+In the research of Roijers et al. discussed in section \ref{sec:RW} the authors did not look at the variance of parameters when researching the model fitted on real data, but rather looked at if the orderings of the parameter values within a parameter type were different. Thus not the variance per parameter is looked at, but rather the ordering of values within a parameter type is checked: i.e. is each parameter still in the same place when ordering on the magnitude of the values. This method is used here as well. So not only the invariance of the parameters is investigated, but also the invariance of the parameter ordering within each parameter type. This is done because, just like in the case of Roijers et al. the interest is not only in the values of the parameters, but rather in whether or not the ordering of the parameters is actually correct: i.e. we don't want to know how much more difficult one KC is compared to another, just which one is more difficult. To look into this, rank-order correlations of each parameter-type between splits are used. This leads to the sub-question "To what extent are the orderings of the KC parameter types invariant?" 
+
 \subsection{Aspect:Different models and different domains}
 This main question will be looked at for the three different multidimensional IRT based learner models defined in the models section. There are also quite some different ITSs that provide data in a form that is suitable for the IRT based models under investigation. The structure of the data between these ITSs and even between different subjects within the same ITS can be quite different. Invariability of the different models may be different for each of these. To gain a broader sense of invariability, three different datasets are used to represent three different domains. Two from different mathematics programs within the same ITS and another from a different ITS.
 
 \subsection{Sub-Question: Influence of Amount of Data}
 Amount of data is expected to play a big role in the variability of parameter values. For this the subquestion "What is the influence of the amount of data on invariability?" is researched. The expectation is that as more data is used the parameter values become more invariable. It will be of interest to see how much of a difference this makes and how much room there might be for improvement by adding more data. The method of researching this subquestion is by increasing the number of parts used in answering the main question. By using more parts, the data per parts will be less and thus the variance for less data will be estimated.
-
-\subsection{Sub-Question: Parameter-type Ordering Invariance}
-In the research of Roijers et al. discussed in section \ref{sec:RW} the authors did not look at the variance of parameters when researching the model fitted on real data, but rather looked at if the orderings of the parameter values within a parameter type were different. Thus not the variance per parameter is looked at, but rather the ordering of values within a parameter type is checked: i.e. is each parameter still in the same place when ordering on the magnitude of the values. This method is used here as well. So not only the invariance of the parameters is investigated, but also the invariance of the parameter ordering within each parameter type. This is done because, just like in the case of Roijers et al. the interest is not only in the values of the parameters, but rather in whether or not the ordering of the parameters is actually correct: i.e. we don't want to know how much more difficult one KC is compared to another, just which one is more difficult. To look into this, rank-order correlations of each parameter-type between splits are used. This leads to the sub-question "To what extent are the orderings of the KC parameter types invariant?" 
 
 \subsection{Sub-Question: Inherent Variance}
 In IRT the information function plays an important role in estimating if the data is sufficient for the parameters to possibly be invariant at all. This variance that is inherent to the model will also be investigated in this research as it could both provide an idea on whether a model's parameters could be sufficiently invariant at all and also provide more insight by providing a baseline for what would a normal amount of variance. This aspect of the research is caught by the sub-question "To what extent is variability of parameters expected given the stochasticity of the model?"
@@ -263,8 +260,9 @@ Finally some measures will be looked at that might help predict the invariabilit
 
 In summary the sub-question are listed below and numbered for reference throughout this thesis.
 \begin{enumerate}
+  \item What is the standard variation of the KC parameter values
+  \item What is the variability of the orderings within the KC parameter-types?
   \item What is the influence of the amount of data on invariability?
-  \item To what extent are the orderings of the KC parameter types invariant?
   \item To what extent is variability of parameters expected given the stochasticity of the model?
   \item Can the variability of the model be indicated by other measures?
 \end{enumerate}
@@ -295,19 +293,19 @@ For comparing two orderings of the same parameter-type we will use Kendall's Tau
 The reason for using Kendall's Tau is that it can serve as a sort of accuracy measure for telling parameters apart. In $frac{\tau+1}{2}$ of the cases a parameter that seems greater than another parameter in the model trained on that part of the data will actually turn out to be greater when the model is trained on a different part. In the experiment the average tau value of every model compared to every other in that split will be calculated, resulting in a single value for every split.
 
 \subsection{Inherent Variance}
-Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in models based on IRT as discussed in subquestion 3.
+Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in models based on IRT as discussed in subquestion 4.
 
 In section \ref{sec:inherent} information functions were discussed. The introduction of different learning rates for correct and incorrect answers introduces a problem: the data is now dependent on the labels. This means that when looking at alternative parameter values from alternative labels, these changes in data are not taken into account in an information function. This issue makes it difficult or even impossible to create an information function, thus a different approach is taken.
 
 The situation described by Baker in section \ref{sec:inherent} can also be achieved by simulating the model. In the simulated approach, first the parameters are determined by fitting the model on the data (here the labels do have their influence on the result). The found parameters are then used to stochastically generate new labels for the data. This means that if the model predicts a .2 probability that the question is answered correctly, 20\% of the time the label will be 1 and 80\% of the time the label will be 0. In the PFA model this generated answer will also influence further probabilities due to the different learning rates for correct and incorrect answers to questions. Multiple sets (10 in our experiments) of labels are generated for the data in this fashion, after which the same model is fitted again on these sets. The inherent variance of every parameter is then estimated by calculating the variance of that parameter over the different trained models.
 
-For our experiments subquestion 3 will also be applied to subquestion 2 and thus the Kendall's tau value is also calculated between every pair of generated models to see how inherent variance mixes up the order of the variables. The average $\tau$ value of all these pairs is used as a one metric to see the inherent invariability of the ordering of parameter values. 
+For subquestion 3, the influence of amount of data, the Kendall's tau value is also calculated between every pair of generated models to see how inherent variance mixes up the order of the variables. The average $\tau$ value of all these pairs is used as a one metric to see the inherent invariability of the ordering of parameter values. 
 
 In the experiment inherent variance and order variance are calculated for each part of every split, since the data in every part can be (very) different and thus have a large influence on the found inherent variances. The average of the variances and $\tau$ values is taken per split, so that they can be compared to the values found per split for the observed data. 
 
 \subsection{Indicators of Variance}
 \label{sec:perf}
-As can be seen in this section the methods used to obtain the variance of the parameters is quite complicated. They take quite some time and the available data is split into parts, making this method unable to make statements about variance of parameters when the whole dataset is used. In the 4th subquestion the question is put forward if perhaps some other measures, that are easier to obtain could be a good indicator for the variance of the parameter.
+As can be seen in this section the methods used to obtain the variance of the parameters is quite complicated. They take quite some time and the available data is split into parts, making this method unable to make statements about variance of parameters when the whole dataset is used. In the 5th subquestion the question is put forward if perhaps some other measures, that are easier to obtain could be a good indicator for the variance of the parameter.
 
 In this subsection a few possibilities are put forward. First two global measures that say something over the entire model and thus could only be used to indicate something on the global level of how high variance would be on average. The last measure, the internal variance says something about each individual parameter though and might could thus indicate how high the variance of individual parameters is.
 
@@ -453,10 +451,10 @@ To see the impact on how many KCs were missing in each run of the experiment on 
 
 The KC's left out are quite constant in number; the increasing number of KCs missing per part as the parts get smaller is apparently off-set by the increasing number of parts. It does mean though that the second order variance of variances found would be higher than expected.
 
-The number of KCs left out per dataset follows the same distribution of KCs left out per dataset in the initial cleaning which was seen in section \ref{sec:domain}. For the Bridge dataset the KCs removed form almost 20\% of the total KCs. Although it is unfortunate to miss this much data, it is a sign that for many KCs in this dataset there is too little data and that average variance of parameters would probably be worse when these KCs would be included. For the Algebra dataset the problem is small and for the Assistment dataset almost non-existent.
+The number of KCs left out per dataset follows the same distribution of KCs left out per dataset in the initial cleaning which was seen in section \ref{sec:domain}. For the Bridge dataset the KCs removed form almost 20\% of the total KCs. Although it is unfortunate to miss this much data, it is a sign that for many KCs in this dataset too little data is available and that average variance of parameters would probably be worse when these KCs would be included. For the Algebra dataset the problem is small and for the Assistment dataset almost non-existent.
 
 \subsection{Orderings within parameters}
-To answer subquestion 4 from the research question rank orders were calculated between the different models build within each experiment. In figure \ref{fig:ranks} the resulting average tau values can be seen from all the experiments. The $\rho$ parameters of the PFA+ models show poor rank correlations over all datasets indicating that the rankings of this parameter are very invariant. This is a big disqualifier for the PFA+ model.
+To answer subquestion 2 from the research question rank orders were calculated between the different models build within each experiment. In figure \ref{fig:ranks} the resulting average tau values can be seen from all the experiments. The $\rho$ parameters of the PFA+ models show poor rank correlations over all datasets indicating that the rankings of this parameter are very invariant. This is a big disqualifier for the PFA+ model.
 The tau values for the $\gamma$ parameter-type for both the PFA+ and LFA models are better, but still relatively low, the $\alpha$ parameter for the seIRT model does comparable on two datasets, but far worse on the third.
 The $\beta$ parameter-type has the best tau values, good for the PFA+ and LFA models and worse, but still ok for the seIRT model.
 
@@ -479,11 +477,11 @@ The $\beta$ parameter-type has the best tau values, good for the PFA+ and LFA mo
 \label{fig:ranks}
 \end{figure}
 
-The conclusion here is that the LFA and PFA+ models learning rates cannot be well distinguished and that these models can generally say little about relative learning speed of different KCs. Since $\alpha$ of the seIRT model also is the only KC based influence on the learning rate, the same is true for this model. The effect the in-distinguishability of $\alpha$ has on the entire model is harder to qualify, but can be substantial. The models still distinguish between KC difficulties quite well, although the LFA and PFA+ models do this better than the eIRT model.
+The conclusion here is that the LFA and PFA+ models learning parameters ($\gamma$ and $\rho$) cannot be well distinguished and that these models can generally say little about relative learning speed of different KCs. The $\alpha$ parameters of the seIRT models are also poorly distinguishable. This parameter has an influence on the initial knowledge and learning parameters. It can thus be stated that the differences in initial knowledge and learning parameters in as far as they are based on the knowledge component are poorly distinguished. All models do distinguish between KC difficulties quite well, although the LFA and PFA+ models do this better than the eIRT model.
 
-Figure \ref{fig:ranks} also holds information for the first subquestion concerning what the influence of data is on the invariance of the parameters. The hypothesis that invariance increases as more data is used holds across the board. There seems to be no direct relation between the number of records per KC used and the tau value, failing to give a rule of thumb of how much data is needed. Looking at the characteristics of the data, there is also no other measure of amount of data that would make an obvious candidate (e.g. number of students or student per KC) and it is surprising that the three figures look quite alike despite the different amounts of data used.
+Figure \ref{fig:ranks} also holds information for the third subquestion concerning what the influence of data is on the invariance of the parameters. The hypothesis that invariance increases as more data is used holds across the board. There seems to be no direct relation between the number of records per KC used and the tau value, failing to give a rule of thumb of how much data is needed. Looking at the characteristics of the data, there is also no other measure of amount of data that would make an obvious candidate (e.g. number of students or student per KC) and it is surprising that the three figures look quite alike despite the different amounts of data used.
 
-\subsection{Overall variance of parameters}
+\subsection{Overall Invariance of Parameters}
 \label{sec:varresults}
 \subsubsection{Overall Variance}
 To answer the mainquestion the average variance per parameter-type over all experiments is displayed in figure \ref{fig:sds}. To gain a better idea of the magnitudes of the standard deviations and to compare them across different parameter-types, each value is normalized by dividing them by the variance within the values of that parameter-type in a model fitted on the whole dataset.
@@ -509,13 +507,14 @@ To answer the mainquestion the average variance per parameter-type over all expe
 \label{fig:sds}
 \end{figure}
 
-At first glance these results correspond to the results from the previous section. Some things jump out though: 1. the normalized variance, especially at splits where the parts have fewer data is extremely high 2. The difference between inherent variance and observed variance is generally low, while in the previous section the differences between the rankings were generally quite distinguished. 3. The ratio of variance of the parameters and the variance within a parameter-type should generally not be higher than 1. Investigating this problem let to the discovery that the general sizes of the parameters differ between experiments with splits into a different number of parts. The following subsection investigates this issue.
+At first glance these results correspond to the results from the previous section. Some things jump out though: 1. the normalized variance, especially at splits where the parts have fewer data is extremely high 2. The difference between inherent variance and observed variance is generally low, while in the previous section the differences between the rankings were generally quite distinguished. 3. The ratio of variance of the parameters and the variance within a parameter-type should generally not be higher than 1. Investigating this problem let to the discovery that the general sizes of the parameters differ between experiments with splits into a different number of parts. The following subsection investigates this issue in more detail.
 
 
 
 
-\subsubsection{Variance within Parameter-types}
-To investigate what happens to the variance of the parameter when using parts of different sizes figure \ref{fig:parvar} displays the average variance of the parameter types in those experiments. Since this variance also differs between models fit on real data and those fit on generated models these variances have been determined separately. Finally all values are divided by the variance used to normalize the values in figure \ref{fig:sds}. Due to the large values of some parameters, especially at parts with little data, the same figure zoomed in at lower values can be seen in figure \ref{fig:parvarz}. 
+\subsubsection{Standard Deviation within Parameter-types}
+\label{sec:parvar}
+In order to see what happens to the parameter sizes of the parameter-types when using different amounts of data, figure \ref{fig:parvar} displays the average standard deviation of the parameter types in those experiments. Since this standard deviation also differs between models fit on real data and those fit on generated data these variances have been determined separately. Finally all values are divided by the standard deviation of that parameter-type in the model trained on all data (which was also used to normalize the values in figure \ref{fig:sds}). Due to the large values for some parameters, especially at parts with little data, a zoomed in version is displayed in figure \ref{fig:parvarz}. 
 \begin{figure}[!htbp]
 \centering
 \subfloat[Legend for the figures]{
@@ -527,6 +526,7 @@ To investigate what happens to the variance of the parameter when using parts of
 \hspace{0mm}
 \subfloat[Standard deviations for Algebra parameters]{
 \includegraphics[width=65mm]{images/algebraallmodsparvar.png}
+\label{fig:parvaralg}
 }
 \subfloat[Standard deviations for Assistment parameters]{
 \includegraphics[width=65mm]{images/gongallmodsparvar.png}
@@ -537,7 +537,7 @@ To investigate what happens to the variance of the parameter when using parts of
 
 
 
-In figure \ref{parvar} the high standard deviation within the learning parameter types of the PFA+ and LFA models are striking. A possible explanation for these results is overfitting: if for example a question for a KC is answered wrong a few times early on by some students, but mostly answered correctly after those initial questions, the model will fit a very high learning rate to this KC. If more students would be present whom might continue to sometimes answer questions concerning this KC wrongly, the KC would be fitted a substantially lower learning rate value. If this is the case it would mean that too little data was used here and that experiments with (seemingly much) more data should be done. Given that already quite a bit of data is used here, this does speak against how invariant the learning parameters of the PFA+ and LFA models are. In this context it should also be noted that all values of the models made on actual data are expected to reach 1 as data is increased up to the same amount as the original dataset. The steeper ascend might mean that increasing data beyond this point will decrease the relative found variance below 1, indicating that even when using the whole dataset overfitting still occurs.
+In figure \ref{fig:parvar} the high standard deviation within the learning parameter types of the PFA+ and LFA models are striking. A possible explanation for these results is overfitting: if for example a question for a KC is answered wrong a few times early on by some students, but mostly answered correctly after those initial questions, the model will fit a very high learning rate to this KC. If more students would be present whom might continue to sometimes answer questions concerning this KC wrongly, the KC would be fitted a substantially lower learning rate value. If this is the case it would mean that too little data was used here and that experiments with (seemingly much) more data should be done. Given that already quite a bit of data is used here, this does speak against how invariant the learning parameters of the PFA+ and LFA models are. It is expected that observed standard deviations reach 1 as data is increased up to the same amount as the original dataset. The steeper ascend might mean that increasing data beyond this point decreases the relative found variance below 1, indicating that even when using the whole dataset overfitting still occurs. It is thus not even certain that using the entire dataset is enough.
 
 \begin{figure}[!htbp]
 \centering
@@ -557,12 +557,15 @@ In figure \ref{parvar} the high standard deviation within the learning parameter
 \caption{(Average) standard deviations of the different parameters}
 \label{fig:parvarz}
 \end{figure}
+
 In figure \ref{fig:parvarz} it is visible that the parameters of the seIRT do much better in this regard, although less well for the Assistment dataset, indicating that more data is desired there. Also the $\beta$ parameters of the PFA+ and LFA models are fairly ok, indicating that overfitting is not so much a problem for them at higher amounts of data. Here too the issue is larger for the Assistment dataset, indicating the need for more data.
 
-Finally the question remains open why the variance in parameters for the simulated data is even higher than that for the observed data.
+The standard deviations for the models fitted to simulated data are consistently higher than for those fitted on observed data. A possible explanation for this could be that overfitting continues to be a problem here, further increasing the size of parameters. Whichever is the case it weakens the basis of using simulated data to look at the theoretical variability of the parameters.
+
+Finally there is a concerning issue visible in figure \ref{fig:parvaralg}: the $\gamma$ parameter-type of the LFA model has high standard deviations, but the $\gamma$ and $\rho$ parameters of the PFA+ model do not. It would be expected that if the $\gamma$ parameters of the LFA model the are actually overfitted, the $\gamma$ and $\rho$ parameters of the PFA+ model, with even less data per parameter, would be overfitted as well. No explanation for this discrepancy has been found.\todo{any ideas?!?}. 
 
 \subsubsection{Adapted Normalization}
-To account for this phenomena and still look at the standard deviation of parameters figure \ref{fig:sds} is repeated in figure \ref{fig:sdsalt}, but instead of using the variance in parameter-types of the model fitted on the whole data, the raw values from figure \ref{fig:parvar} are used to normalize the raw variances. This means that every datapoint has its own normalization factor instead of a single normalization factor for both the internal and observed variances of a model parameter at all different splits.
+To account for the phenomena of increasing parameter sizes and still look at the standard deviation of parameters figure \ref{fig:sds} is repeated in figure \ref{fig:sdsalt}, but instead of using the variance in parameter-types of the model fitted on the whole data, the raw values from figure \ref{fig:parvar} are used to normalize the raw variances. This means that every datapoint has its own normalization factor instead of a single normalization factor for both the internal and observed variances of a model parameter at all different splits.
 
 \begin{figure}[!htbp]
 \centering
@@ -583,11 +586,14 @@ To account for this phenomena and still look at the standard deviation of parame
 \label{fig:sdsalt}
 \end{figure}
 
-In figure \ref{fig:sdsalt} the variances of the parameters of the seIRT model are strikingly high. This is surprising since the tau values of this model aren't as bad. These contradictory results actually reinforce one of the reasons for using tau: the normalization step of the models parameters in the fitting procedure increase the found variance, while not meaning that the model is necessarily worse.
+In figure \ref{fig:sdsalt} the standard deviations of the parameters of the seIRT model are strikingly high. This is surprising since the tau values of this model aren't as bad. These contradictory results actually reinforce one of the reasons for using tau: the normalization step of the models parameters in the fitting procedure increase the found variance, while not meaning that the model is necessarily worse.
 
-\todo{opposite seems to be the case for the $\rho$ parameter. Why?}
+The discrepancy between figure \ref{fig:sdsalt} and the found tau values doesn't stop at the seIRT model. The $\beta$ parameters of the other models also seem to be doing relatively worse compared to the learning parameters of these models. The conclusions form this observation is that this method is biased towards parameter-types with high standard deviations. This conclusion is futher considering that in the Algebra dataset the $\gamma$ parameters of the LFA model scores well on this metric compared to the other parameters, while this parameter-type also had a high standard deviation. This section thus brings to light some major problems with parameter invariability of the AFM and PFA+ models, but fails to supply other useful information.
 
-\subsection{Measures of fit}
+\subsection{Indicators of Variance}
+To answer the fifth subquestion concerning an exploration of finding what measures might be used to predict the invariance of the parameters of a model. First the log likelihood and then A' are looked it, which are global measures of the model fit and thus only look at the global invariance. The last measure looked at is Inherent variance. Since inherent variance is given for every parameter, the relation between inherent variance and invariability of individual parameters can be investigated.
+
+\subsubsection{likelihood}
 In figure \ref{fig:likely} the points belonging to the different splits can easily be distinguished: there are three groups one for each data set (from left to right, Assistment, Algebra and Bridge) and within each group the point with the highest tau value is the one with the most data associated with it. That the PFA models have a higher likelihood is to be expected as it has more parameters than the LFA models. It is also sensible that with more data in a split the likelihood goes down, since the same number of parameter values is used to explain more data. Although there is a nice relationship between tau and likelihood within each dataset, this relationship probably stems from the previous two relationships mentioned: as the amount of data goes up, so do the tau values and as the amount of data goes up, the likelihood goes down. When looking over all three datasets there actually seems to be a slightly positive relation between likelihood and tau values. The wide spread of $\tau$ values over splits of the same dataset (where the relation is quite negative) compared to the slight positive relation makes it unlikely that likelihood can be used to make inferences about the distinguishability of parameter values.   
 
 \begin{figure}[!htbp]
@@ -603,12 +609,15 @@ In figure \ref{fig:likely} the points belonging to the different splits can easi
 \caption{Kendall Tau values vs goodness of fit measures}
 \end{figure}
 
-A' shows more promise to be a useful feature in establishing the invariability of parameter values. As seen in figure \ref{fig:ap} there is a positive relation between A' and the tau of all the different parameters in both models. Another interesting observation is that the PFA models generally performs better on A' than the LFA models do.
+\subsubsection{A'}
+A' shows more promise to be a useful feature in establishing the invariability of orderings of parameter values. As seen in figure \ref{fig:ap} there is a positive relation between A' and the tau of each of the different parameters in both models. It should also be noted though, that A' might not be the best basis to favor one model over the other: PFA+ generally performs better on A+ than AFM, even though the the PFA+ model does worse when invariability of parameters is concerned.
 
-\subsection{Micro level}
-So far the results have been looked at on a global level, now it is time to look at the data from the perspective of individual parameter values. In table \ref{tab:intorank} the Spearman's r values can be seen when comparing the inherent variances and the observed variances of all the different parameter values from all the different splits. The values found are quite high, indicating that inherent variance could well be used in predicting the variance of specific parameter values. 
+\subsubsection{Inherent Variance}
+The final measure looked at is the inherent variance. The inherent variance can be obtained on the whole dataset in contrast with the splitting method used. Initially the data from all splits of a model on a dataset were put together to obtain the spearman's rho values for each parameter-type. Discovering that variance within parameter-types is higher for splits with many parts for some models (as described in section \ref{sec:parvar}) caused some reconsideration of this approach. The issue is apparent when considering the usage of a rank-order correlation measure on a combination of two sets of paired values, one of which all values are between beteen 0 and 1 and the other where all values are between 1 and 2. The lack of overlap means that the rank-order correlation measure over the combined set is always better than the average of the measures of both sets. In this thesis an alternative method is considered to see how different the results would be. The alternative is to take the average rho value of the different sets.
 
-In section \ref{sec:varresults} it was discovered that over the different splits there can be a significant difference in the variance of a parameter. This has as an unintended consequence that the Spearman's r values are higher when the values of the different splits overlap less. Therefor the Spearman's R values were recalculated using the average of the values in each split rather than the value over all splits combined. The results were vary similar (mostly a difference of .01) and therefor left out. 
+In table \ref{tab:intorank} the Spearman's rho values are displayed. Outside the bracket is the rho value over the combined data from all the splits. The value within brackets is the average of the individual split experiments. Where the difference was .01 or less only one value is displayed. For 'Overall' the variance of all datasets were combined and one rho value calculated over them. The value between brackets is the average of the rho values of the different datasets.
+
+
 \begin{center}
 \begin{table}[!htbp]
 \begin{tabular}{| l || l | l ||l|l |l||l|l|}
@@ -622,39 +631,50 @@ In section \ref{sec:varresults} it was discovered that over the different splits
     Overall    & 0.87(0.83) & .94 & 0.91(0.85) & .96 & .94 & 0.71(0.69)&0.72(0.73) \\
     \hline
 \end{tabular}
-\caption{Spearman's R of inherent and total variance of various parameters and models over all splits}
+\caption{Spearman's R of inherent vs total variance of various parameters and models over all splits (average instead of combination in brackets)}
 \label{tab:intorank}
 \end{table}
 \end{center}
 
-\newpage
+
+
+Mistery of rho values not in spaces where it would be expected.
+\todo{Considering to throw this part out. It seems to add little, be a bit confusing and I realized for that I haven't used the adjusted standard deviations, which might be more sensible}
+
+
 \section{Conclusion and Discussion}
+\subsection{What is the standard deviation of the KC parameter values?}
+The answer to this question remains largely undecided. In the cases of the PFA+ and LFA models the problem stems from the observation that parameter sizes increase as fewer data is used. In the case of seIRT the standard deviation seems to be estimated far too high, given that this model scores quite well on the invariability of parameter orderings. The observed increase in parameter sizes in PFA+ and LFA models makes this models poor candidates as this means that learning rates will be estimated as lower as more data is used.
 
-In relation to the first subquestion on the influence of the amount of data on the distinguishability of the parameters, the main expectation holds: the more data is used, the more stable the found parameter values and thus distinguishable the parameters become. The improvements made improve less and less as the amount of data is increased. Most parameters ranks, both obtained from the splits and obtained from simulated data are still increasing at the least number of splits used. The exception to this seems to be the $\rho$ parameters in the Bridge dataset where especially for the parameter in the generated case there is barely any improvement. It should be noted that the sizes of the biggest splits already contain a lot of data and that increasing the data further might hide that some parameters can strongly vary in different situations. For example a learning parameter value for a KC that is double the value for one class of students compared to another might show great instability when taking small splits. When splits become very large and students are about equally represented in each group the instability of the learning parameter values disappears as in all splits the same average is found. In IRT it is this kind of variability that is looked out for and can be used to actually improve models when outliers are found.
+\subsection{What is the invariability of the orderings within the KC parameter-types?}
+The Kendall's Tau values show that the orderings of the learning parameters of the PFA+ and LFA models and the $\alpha$ parameter of the seIRT model vary considerably. Statements about some KC having a higher learning rate than another can generally not be made. In the case of seIRT it means that statements about differences between starting knowledge and learning rate of KCs can generally not be made. The exceptionally poor Kendall's Tau values for the $\rho$ parameters show that LFA should be preferred to PFA+ when invariability is desired.
 
-When looking into the second subquestions of the differences between the domains, the biggest difference is that similar results are obtained on different amounts of data. A possible explanation for this might be that a different definition of size should have been used (e.g. records per parameter value in the model, or counting questions where two KCs are involved as two, where three are involved as three, etc.). Another interesting observation is that in the Assistment dataset the tau on observed data and generated data are relatively near eachother, suggesting that the Assistment domain works more like the model than the other two do.
+\subsection{What is the influence of the amount of data on invariability?}
+The hypothesis that with more data the variability of the parameters is reduced was confirmed. No straightforward relation between the amount of data and the standard deviation or Kendall's tau was observed over the three different datasets. For most parameters it seemed that improvement was still possible through adding more data. This improvement was relatively low and seemingly diminishing, leaving little hope for the Kendall's Tau values of learning parameters and the $\alpha$ parameter to improve to a useful level.
 
-For the third subquestion it was looked at whether the A' of the test-set or the average likelihood of the data might be indicative of the distinguishability of the parameters. Likelihood of the model in the end is quite unrelated to the tau of the parameters. There seems to be enough of a relation between A' and distinguishability for A' to be of use. Nevertheless the variety in tau values seen around the same A' values show that using A' alone would not be accurate.
+\subsection{To what extent is variability of parameters expected given the stochasticity of the model?}
+On a globel level the inherent variance (represented as standard deviations) is quite close to the observed variance. On a micro level (of individual parameters) it is seen that the Spearman's Rho values between inherent and observed variance are high. Inherent variance as used here does seem a good indicator of variance of the paramter. There is one issue about the method used here: in cases where overfitting of parameter values seems to occur (resulting in relatively large value sizes), this problem is even worse for the calculated inherent variance.  
 
-When looking at the A' and likelihood values, this is considering how well the model fits on a macro level. To see if something more could be said about individual parameters as well, the rho rankorder values between the variances over the splits and the variances found on generated data was looked at. Since the rho values are quite high it indicates that the variance over the generated data is a good candidate for predicting the real variance over the parameter. A high rho value doesn't guarantee that a good function can be found to relate the two. More research would thus have to be done to establish this. When fitting a function attention could also be paid to investigating if outliers might be caused by bad KC's or items which could be used to improve the Q-matrix or otherwise make discoveries.
+\subsection{Can the invariability of the model be indicated by other measures?}
+The likelihood seems to hold no information on the invariability of the parameters. Since accuracy measures are often already looked at when considering learner models. Although generally better A' values do correspond with better invariability of rank orders, it is a bad idea to base model choice on this metric from an invariability of parameters perspective: PFA+ generally outperforms LFA, but has worse invariability of parameters.
+\todo{considering to here only look at A' as a measure used to evaluate models and do this different in the results to match the new question. The part on spearman's rho will than only belong to the prevous section}  
 
-For the fourth question the inherent variance was inspected to see what part of the indistinghuisability of the parameter values would result from the stochastic nature of the model. It turns out the stochasticity of the model can often explain a large part of the variation in parameter value orderings. Especially for $\rho$ it shows a rather poor result. 
+\subsection{Improvements}
+The results for the standard deviations were quite poor and inconclusive. Using the standard deviation within parameter types can probably be improved by using the absolute sum of all parameters of a type for normalization. This is because parameter size and standard deviation are definitely related (double the parameter sizes and the standard deviation doubles as well), but a doubling of the standard deviation, doesn't mean that the parameter sizes on average have doubled. Using this method could potentially get rid of the problem that parameter-types with high standard deviations benefited disproportionately from the adapted normalization.
 
-Finally the observation that variance is of parameters is higher in smaller datasets is disconcerting. It would be a good idea to look at speed of learning over the different splits to see if they are consistent. Otherwise the model would seem to be unfit for estimating levels of students.
-
-In conclusion there is good indication that the distinguishability of parameters, both on a macro level and a micro level might be identified. Nevertheless only the $\beta$ parameters seem to be fairly distinguishable while the learning parameters are marginally distinguishable. Especially the $\rho$ parameter does badly in this regard en when looking at small improvements made by increasing the amount of data, this will not be remedied by using more data. Seeing that the PFA+ models consistently obtain better A' metrics than their LFA counterparts, Gong et al.'s observation that PFA is better for predicting students answers (see section \ref{sec}) seems to extend to PFA+. For student modelling with consistent parameters LFA is more suited than PFA+, even though learning still poses a problem for this model as well and student intitial knowledge needs to be further investigated.
-
+The standard deviations and Kendall's tau values in which the results are represented are hard to interpret. A solution could have been to take some ITS scenarios (some questions to some students for every KC) and then see how much the different values of the parameters in the different parts would have mattered at the end. Besides giving more interpretable results this would also remove the indeterminacy issue of the seIRT model that is thought to increase the observed variance of its parameters.
 
 
-\newpage
-\todo{
-\section{Things to add and change}
-\begin{itemize}
-\item Describe terms and use those consistently!
-\item related work is a bit out of place as it is not very intelligible without information given later. Maybe move it to the end, or rather integrate it with other stuff?
-\item Investigate some of the outliers? 
-\end{itemize}
-}
+
+\subsection{Further Research}
+Amount of data in this research was looked at from a global and crude perspective. Instead it would be good to look at a low level at how much data is necessary concerning a particular KC to make the parameter estimates for that KC accurate. The effect of multiple KCs being associated with an item should also be considered.
+
+The method to obtain inherent variance should be looked into further. The 'overfitting' (if that is what happens) should be investigated and perhaps the difference between inherent variance and observed variance can be used to indicate when this overfitting no longer occurs.
+
+The method used to investigate the invariability of the parameters did not use Hambleton's idea of selectively splitting the data. This path should be explored further. For example splitting the students by skill may show that in the LFA and PFA+ models learning rates are high for the high skill group and low for the other and show holding the learning rate independent of students is too strong an assumption. Making the split based on difficult versus easy KC's (which is less trivial!) and using model where the learning rate is solely dependent on the student it could be seen how important the assumption that the learning rate is dependent on the KCs is. 
+
+\todo{Some final words? Final other stuff}
+
 \bibliographystyle{alpha}   % this means that the order of references
 			    % is determined by the order in which the
 			    % \cite and \nocite commands appear
