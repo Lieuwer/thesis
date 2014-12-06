@@ -80,25 +80,31 @@ Several models are introduced and defined in this section. First some terminolog
 \subsection{Terminology}
 For clarity's sake, a few terms that are used throughout this thesis are described here. The data for IRT models and for learner models are similar. Implicit in the data are a number of student (users of the system who answer 'questions') and a number of items (the 'questions' asked). The characteristic of an item is that for each a single answer is expected. It might thus be that what normally is considered a single 'question', is translated to multiple items. For example, "What is the circumference and the area of a circle with diameter 2?" would be two items as two answers are expected. A question in the context of this thesis is one specific item asked to one specific student. This is the only meaning in which 'question' will be used from this point on. Finally, an answer is here defined no as what answer was given exactly, but whether the answer was correct or incorrect. The data then consists of questions and their associated answers, where every question-answer pair is a single data-point.  
 
-There are many parameters used by the different models. A parameter is either defined for every item or for every student and is displayed by one symbol. The value of a parameter for a particular student or item will be called parameter and is displayed by adding a subscript ($i$ for item and $s$ for student) to the symbol. All the instances of a specific parameter together is called a parameter-type. 
+There are many parameters used by the different models. A parameter is either defined for every item (called an item parameter) or for every student (called a student parameter) and is displayed by one symbol. The parameter value for a particular student or item will be called parameter and is displayed by adding a subscript ($i$ for item and $s$ for student) to the symbol. All the instances of the same parameter together is called a parameter-type. 
 
 \subsection{IRT Models}
-On the outside an IRT model calculates a probability $P$ for any question that the answer is correct. This probability is both influenced by the type of model used and the value that the parameters in that model are given. The function at the basis of every IRT model is the logistic ogive function (see formula \ref{eq:logistic}). In $x$ all parameters belonging to the item and student involved in the question are combined. The number of parameters per item and student depends on what IRT model is used. For the three most popular IRT models the structure of $x$ and its parameters are described in the following subsections. Finally it is described how the values of all the parameters are fitted to the data, how a theoretical minimum for the variance is determined and how this fit is evaluated. 
-
+As was mentioned in the introduction, an IRT model takes a question (i.e. the item asked and the student to whom it is asked) as input and returns the probability, $P$, that the question is answered correctly as output. The function at the basis of calculating this probability in each IRT model and all the IRT based learner models is the logistic ogive function (see formula \ref{eq:logistic}). The different IRT models mostly differ in how $x$ is defined. Parameters of the item and student involved in the questions are combined in $x$. Generally only a single parameter for students is defined (student ability), while the number of parameters for items and how they are all combined into $x$ varies between the different IRT models.
+ 
 \begin{equation}
 \label{eq:logistic}
-\sigma(x) = \frac{1}{1+e^{-x}}
+P = \sigma(x) = \frac{1}{1+e^{-x}}
 \end{equation}
 
 \subsubsection{1PL or Rasch Model}
 \label{sec:1PL}
-The 1PL model, also known as the Rasch model has one parameter ($\theta_{s}$) per student and one parameter ($b_{i}$) per item. $\theta_{s}$ stands for the ability of the student and $b_{i}$ stands for the difficulty of the item. The entire formula for a question's probability of a correct answer is $P(s,i) = \sigma(\theta_{s} - b_{i})$. This means that when the skill of the student and the difficulty of the item are on a par, the student has a probability of .5 to answer the question correctly. Note that there exists an indeterminacy issue with this model: one can have the same results while changing the parameter values by increasing or decreasing all $\theta$ and $b$ values by the same amount. This problem is generally solved by setting the average $\theta$ to 0.
+The 1PL model, also known as the Rasch model has one parameter ($\theta_{s}$) per student and one parameter ($b_{i}$) per item. $\theta_{s}$ stands for the ability of the student and $b_{i}$ stands for the difficulty of the item. A question's probability of a correct answer is caught in the formula $P(s,i) = \sigma(\theta_{s} - b_{i})$. Where i is the item asked and s is the student the item is asked to in this question. This means that when the skill of the student and the difficulty of the item are on a par, the student has a probability of .5 to answer the question correctly. 
+
+For this model there is an indeterminacy issue. This means that different parameter values of a model can lead to exactly the same outcomes. In this case the issue lies in the fact that decreasing all $\theta$ and $b$ values by the same amount keeps the $P$ for any question constant. This problem is generally solved by requiring the average $\theta$ to be 0.
 
 \subsubsection{2PL Model}
-The 2PL model expands the 1PL model with the parameter $a$ which is called the discrimination of the item. The 2PL model then looks like this: $P(s,i) = \sigma(a_{i} (\theta_{s} - b_{i}))$ The term discrimination comes from the fact that a high discrimination causes $P$ to change quickly when $|(\theta_{s} - b_{i})|$ is small and thus the performance of students who are close in skill can be more easily distinguished. The flip-side here is that when $|(\theta_{s} - b_{i})|$ isn't small, $P$ will more quickly drop to 0 or rise to 1, concealing any difference between skill levels at those levels. Note that for this model not only can $\theta$ and $b$ be increased or decreased by the same amount, but all $a$ can be scaled up or down as long as all $\theta$ and $b$ are scaled down or up respectively by the same factor. This problem is generally solved by setting the average $\theta$ to 0 and its variance to 1. 
+The 2PL model expands the 1PL model with the parameter $a$ which is called the discrimination of the item. The 2PL model's formula is: $P(s,i) = \sigma(a_{i} (\theta_{s} - b_{i}))$ The term discrimination comes from the fact that a high discrimination causes $P$ to change quickly when $|(\theta_{s} - b_{i})|$ is small and thus the performance of students who are close in skill can be more easily distinguished. The flip-side here is that when $|(\theta_{s} - b_{i})|$ isn't small, $P$ will more quickly drop to 0 or rise to 1, concealing any difference between skill levels at those levels. 
+
+For this model indeterminacy is an issue: not only can $\theta$ and $b$ be increased or decreased by the same amount, but all $a$ can be scaled up or down as long as all $\theta$ and $b$ are scaled down or up respectively by the same factor. This problem is generally solved by setting the average $\theta$ to 0 and its standard deviation to 1. 
 
 \subsubsection{3PL Model}
-The final IRT model discussed here is the 3PL model which adds a chance parameter $c$. This model takes into account that on occasion the student could answer a question correctly by taking a (educated) guess. This phenomenon is most prevalent in multiple choice tests where the chances of correctly guessing the answer are high. The model effectively changes the lowest probability to the level of $c$ and the space between $c$ and $1$ is rescaled accordingly leading to formula \ref{eq:3PL}. This model suffers from the same identifiability issues as the 2PL model. In this thesis this model is left out of consideration, as none of the learning models are based on it and none of the data is multiple choice and will thus not be mentioned again. 
+The 3PL model adds a chance parameter $c$ to the 2PL model. It uses this parameter to take into account that on occasion a student who doesn't know the answer, could still answer correctly by taking a (educated) guess. This phenomenon is most prevalent in multiple choice tests where the chances of correctly guessing the answer are high. The model effectively changes the lowest probability to the level of $c$ and the space between $c$ and $1$ is rescaled accordingly. The resulting formula \ref{eq:3PL} doesn't differ in $x$ from the 2PL model, but rather the logistic function itself is adapted. 
+
+This model suffers from the same indeterminacy issues as the 2PL model. In this thesis this model is left out of consideration, as none of the learning models are based on it and none of the data is multiple choice.
 
 \begin{equation}
 \label{eq:3PL}
@@ -106,7 +112,7 @@ P(s,i)= c_{i} + \frac{1-c_{i}}{1+e^{-a_{i}(\theta_{s} - b_{i})}}
 \end{equation}
 
 \subsubsection{Fitting the Models}
-The above paragraphs have discussed what the parameters are taken to represent and how they are used in the model. None of these parameters are directly observable (i.e. they are latent) and thus are not directly obtained from observations. Instead the observed answers to the questions asked and the probability that the those answers would be generated by the model are used. The parameters are given those values at which the likelihood that the observed answers arise from the model is maximized. The likelihood of the answer to a single question is the probability that that answer is seen according to the model. Thus if the answer is correct, the likelihood for that answer is $P$, while if the question is answered incorrectly the likelihood is $1-P$. By taking the product of the likelihoods of each data point the likelihood of the entire dataset is determined, which gives formula \ref{eq:likely}. In this formula $D$ is the dataset, $d$ is a data-point and $t_{d}$ is the observed answer of data-point $d$ which has a value of either 0 (incorrect) or 1 (correct). $P_{d}$ is the predicted probability by the used model that the answer to data-point $d$ is correct.
+The above paragraphs have discussed what the parameters are taken to represent and how they are used in the model. None of these parameters are directly observable (i.e. they are latent) and are thus not directly obtained from observations. Instead the observed answers to the questions asked and the probability that the those answers would be generated by the model are used. The parameters are given those values at which the likelihood that the observed answers arise from the model is maximized. The likelihood of the answer to a single question is the probability that that answer is seen according to the model. Thus if the answer is correct, the likelihood for that answer is $P$, while if the question is answered incorrectly the likelihood is $1-P$. By taking the product of the likelihoods of each data point the likelihood of the entire dataset is determined, which gives formula \ref{eq:likely}. In this formula $D$ is the dataset, $d$ is a data-point and $t_{d}$ is the observed answer of data-point $d$ which has a value of either 0 (incorrect) or 1 (correct). $P_{d}$ is the predicted probability by the used model that the answer to data-point $d$ is correct.
 
 \begin{equation}
 \label{eq:likely}
@@ -289,32 +295,39 @@ In summary the sub-question are listed below and numbered for reference througho
 \end{enumerate}
 
 \section{Method}
+\begin{comment}
 In this section first some metrics that are used for various aspects of this research are explained. Then the general method of creating splits for the main research question is explained followed by how the data is cleaned. Then the methods for obtaining the variance and inherent variance are described in the context of the splitting method. Finally some characteristics of the datasets that represent different domains are given to reveal the differences between them.
+\end{comment}
+
+In this section some methods are described that are used to answer sub-questions of the research question. In doing so, some metrics are described that are used in these methods and it is explained why these methods were chosen to answer these questions. At the end of all these elements are put together in the overview of the experiment created and how this experiment is used.
 
 \subsection{Splitting Data to Observe Variance}
 \label{sec:splits}
 In order to get an idea of the variance of parameters in reality, data is split into multiple parts. The same model is fitted on each part of the data (from now on called a part) and the variance for each parameter can then be calculated over the models fitted to each different part. 
 
-The split is made by randomly distributing the students over the different parts. Each student is thus found in only one part and all questions belonging to that student are found in that part. This was done for a few reasons. First, this way of splitting keeps the data as much as possible in a grouping that can be seen in a dataset from an ITS.  Also, splitting the model according to KCs is more difficult as items can belong to multiple KCs. Also since there are more students than KCs, variance estimates for students would be more difficult as parts would more easily not contain any records of a single student. Finally, a practical matter, the count of how often a student has answered a question concerning a knowledge component is implicitly available in the models. Variance of the parameters that are defined per student are thus not obtained by this method, only variances for the the KC parameters.
+The split is made by randomly distributing the students over the different parts. Each student is thus found in only one part and all questions belonging to that student are found in that part. This is done for a few reasons. First, this way of splitting keeps the data as much as possible in a grouping that can be seen in a dataset from an ITS.  Second, splitting the model according to KCs is more difficult as items can belong to multiple KCs. Also since there are more students than KCs, variance estimates for students would be more difficult as parts would more easily not contain any records of a single student. Finally, a practical matter, the count of how often a student has answered a question concerning a knowledge component is implicitly available in the models. Variance of the parameters that are defined per student are thus not obtained by this method, only variances for the the KC parameters.
 
-A model is also fit on the entire data-set. The variance within each parameter type is then used to normalize all the individual parameter variances from the splits. These normalized variance values are more easily interpretable as they are relative to the spread in their corresponding parameter type. Otherwise variances of learning rates would seem relatively low (as these values are generally low), while those of item difficulty seem relatively high.
+In order to answer sub-question 1, splits with different numbers of parts are made. Five different splits are used here with 6,8,12,16 and 32 parts. The splits with 6 parts have the most data and the splits with 32 parts have the least. It should be noted that a split with fewer parts has a higher second order variance for the found variance of parameters.
 
-In order to answer sub-question 1, splits with different numbers of parts are made. Five different splits are used here with 6,8,12,16 and 32 parts. The split with 6 parts will have the most data and the split with 32 parts will have the least. It should be noted that the split with the more fewer parts will have a higher second order variance for the found variance of parameters.
+The parameter variances found in this way are difficult to interpret due to a lack of a frame of reference. To provide a frame of reference a model will be fit on the entire data-set. The variance within each parameter type of this model is then used to normalize all the individual parameter variances found the splits. By showing how the variance of parameters correspond to total variance within that parameter-type, variances of parameters of the same and different parameter-types can be interpreted and compared.
+
 
 \subsection{Obtaining Variance of Orderings}
-Besides looking at the variance of individual parameters we also want to see if the ordering of parameters' magnitude within a parameter type is similar to the ordering of those parameters in a model fitted on a different part of the data. Rank-order correlation measures can be used to indicate how similar two orderings are. They take a set of paired values as input and return a single value. The paired values in our case would be a parameters value from one model and the same parameter's (belonging to the same KC) value from another model. Rank orders are made for both values meaning that every value is replaced with its rank (i.e. 1 for the highest value, 2 for the second highest). A correlation is then made between the two rank orders, where a value of 1 means that if the one value is the x highest value, the paired value in the other set is also the x highest value. A rank order correlation of -1 means the opposite: if one value is the  highest, the paired value in the other set is the x lowest value. In our example we would expect a positive rank order correlation value. Nevertheless we do not expect a value of 1 since we expect variance in the parameters to prevent the ordering from being exactly the same. 
+As put forward in sub-question 2, it is not always the exact values of the parameters that are of interest: sometimes the order of parameters is what's interesting. For these cases we are not interested in the variance of parameter, but rather the variance in the ordering of parameters. Rank-order correlation measures are a good measure for these cases.
 
-For comparing two orderings of the same parameter-type we will use Kendall's Tau. Kendall's Tau looks at all possible combinations of two elements from the set and looks whether or not the ordering of their paired values is the same. Formula \ref{eq:tau} shows the definition for Kendall's Tau, where $S$ is the number of tuples where the relation for both elements of the pairs is the same and $D$ where the relation is different. For example if we take the tuple $(\beta_{2},\beta_{5})$ and in our first model $(\beta_{2}>\beta_{5})$ and in our second model $(\beta_{2}<\beta_{5})$ this tuple would add one to D. $n$ is the number of paired values. The denominator is then equal to the number of possible tuples within the set of values.
+Rank-order correlation measures can be used to indicate how similar two orderings are. They take a set of paired values as input and return a single value. The paired values in our case would be a parameter value from one model and the same parameter (belonging to the same KC) value from another model. Rank orders are made for parameter-types from both models, meaning that every value is replaced with its rank (i.e. 1 for the highest value, 2 for the second highest). A correlation is then made between the two rank orders, where a value of 1 means that if the one value is the x highest value, the paired value in the other set is also the x highest value. A rank order correlation of -1 means the opposite: if one value is the x highest, the paired value from the other model is the x lowest value. In our example we would expect a positive rank order correlation value. Nevertheless we do not expect a value of 1 since we expect variance in the parameters to prevent the ordering from being exactly the same. 
+
+For comparing two orderings of the same parameter-type we will use Kendall's Tau. Kendall's Tau looks at all possible combinations of two elements from the set and looks whether or not the ordering of their paired values is the same. Formula \ref{eq:tau} shows the definition for Kendall's Tau, where $S$ is the number of tuples where the relation for both elements of the pairs is the same and $D$ where the relation is different. For example if we take the tuple $(\beta_{2},\beta_{5})$ and in our first model $(\beta_{2}>\beta_{5})$ and in our second model $(\beta_{2}<\beta_{5})$ this tuple would add one to D. $n$ is the number of paired values. The denominator in formula \ref{eq:tau} is then equal to the number of possible tuples within the set of values.
   
 \begin{equation}
 \label{eq:tau}
 \tau=\frac{S-D}{.5 n (n-1)}
 \end{equation}
 
-The reason for using Kendall's Tau is that it can serve as a sort of accuracy measure for telling parameters apart. In $frac{\tau+1}{2}$ of the cases a parameter that seems greater than another parameter in the model trained on that part of the data will actually turn out to be greater when the model is trained on a different part. In the experiment the average tau value of every model compared to every other in that split will be calculated, resulting in a single value for every split.
+The reason for using Kendall's Tau is that it can serve as a sort of accuracy measure for telling parameters apart. In $\frac{\tau+1}{2}$ of the cases a parameter that seems greater than another parameter in the model trained on that part of the data will actually turn out to be greater when the model is trained on the other part. In the experiment the average tau value of every model compared to every other in that split will be calculated, resulting in a single value for every split.
 
 \subsection{Inherent Variance}
-Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in models based on IRT as discussed in subquestion 4.
+Inherent variance is used as the name for the variance caused by the stochasticity of the model. Variance caused by stochasticity of the model was already discussed for the IRT models and the same issue plays a role in data based on IRT as discussed in subquestion 4.
 
 In section \ref{sec:inherent} information functions were discussed. The introduction of different learning rates for correct and incorrect answers introduces a problem: the data is now dependent on the labels. This means that when looking at alternative parameter values from alternative labels, these changes in data are not taken into account in an information function. This issue makes it difficult or even impossible to create an information function, thus a different approach is taken.
 
@@ -413,26 +426,31 @@ This dataset is quite different from the other two as it is taken from a web-bas
 958 (0.009)&0&0
 \end{comment}
 
-\begin{comment}
-\subsection{KC Experiment}
-\subsubsection{The Experiment}
-In detail the experiment for KC parameters consists of the following steps per model:
+
+\subsection{The Experiment}
+In detail the experiment for KC parameters consists of the following steps:
 \begin{enumerate}
+\item Train a 'main-model' on the whole dataset
 \item Clean the data by removing students according to section \ref{sec:cleaning}
-\item Split the data in a increasing number of parts. Then for each part:
+\item Split the data in a number of parts. Then for each part:
 \begin{enumerate}
 \item Clean the data by removing KCs according to section \ref{sec:cleaning}
-\item Train the model and determine the variance for every parameter type
+\item Train the model on the part
 \item Determine performance on the test-set for that split
-\item Determine the inherent variance through the Fisher matrix and through simulation
-\item Normalize the found variances with the variances per parameter type found above
+\item Determine the average inherent variance through simulation
+\item Determine the average Kendall's tau value over all model trained on simulated models (=inherent tau)
 \end{enumerate}
-\item Determine the variance per parameter over all the splits
-\item Normalize the found variances with the average of variances per parameter type found above
+\item Determine the variance per parameter over all the parts
+\item Determine the average Kendall's tau value between all the model
+\item Determine the average inherent variance and Kendall's tau over all parts 
+\item Normalize all the found variances with the variances per parameter-type from the main-model
 \end{enumerate}
-\end{commment}
-\subsubsection{Representing the Results}
+
+The experiment is done for every combination of split (6,8,12,16 and 32), model (LFA, PFA+ and seIRT) and dataset (Bridge, Algebra and Assistment). In total this results in 5x3x3=45 experiments being performed.
+
 \begin{comment}
+\subsubsection{Representing the Results}
+
 Dit is een voorstel voor het representeren van de resultaten. Feedback, ideeen of suggesties worden erg gewaardeerd.
 For every split into a number of parts and every model the following will be represented:
 \begin{enumerate}
